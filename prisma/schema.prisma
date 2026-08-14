@@ -1,0 +1,392 @@
+// Kids Note backend — Prisma schema
+// Conventions: soft delete (deletedAt), audit columns (createdAt/updatedAt),
+// UUID primary keys, snake_case columns via @map, plural snake_case table names.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum AuthProvider {
+  LOCAL
+  GOOGLE
+  FACEBOOK
+  APPLE
+}
+
+enum FamilyRole {
+  OWNER
+  PARENT
+  GRANDPARENT
+  CAREGIVER
+}
+
+enum MemberStatus {
+  PENDING
+  ACTIVE
+  REVOKED
+}
+
+enum PlanType {
+  FREE
+  PREMIUM
+  FAMILY
+  AI_ADDON
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+enum FeedingType {
+  BREAST_MILK
+  FORMULA
+  SOLID
+  WATER
+}
+
+enum VaccineStatus {
+  UPCOMING
+  DONE
+  MISSED
+}
+
+enum AiKind {
+  CHAT
+  JOURNAL
+  GROWTH_ANALYSIS
+  MILESTONE
+}
+
+// ---------------------------------------------------------------------------
+// Identity & Family
+// ---------------------------------------------------------------------------
+
+model User {
+  id           String       @id @default(uuid())
+  email        String       @unique
+  passwordHash String?      @map("password_hash")
+  fullName     String       @map("full_name")
+  avatarUrl    String?      @map("avatar_url")
+  provider     AuthProvider @default(LOCAL)
+  providerId   String?      @map("provider_id")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  ownedFamilies  Family[]         @relation("FamilyOwner")
+  familyMembers  FamilyMember[]
+  notes          Note[]           @relation("NoteAuthor")
+  aiConversations AiConversation[]
+  refreshTokens  RefreshToken[]
+  auditLogs      AuditLog[]
+
+  @@index([deletedAt], map: "idx_users_soft_delete")
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String    @id @default(uuid())
+  userId    String    @map("user_id")
+  token     String    @unique
+  usedAt    DateTime? @map("used_at")
+  revokedAt DateTime? @map("revoked_at")
+  expiresAt DateTime  @map("expires_at")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId], map: "idx_refresh_tokens_user_id")
+  @@map("refresh_tokens")
+}
+
+model Family {
+  id      String @id @default(uuid())
+  name    String
+  ownerId String @map("owner_id")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  owner         User           @relation("FamilyOwner", fields: [ownerId], references: [id])
+  members       FamilyMember[]
+  children      Child[]
+  subscription  Subscription?
+  notifications Notification[]
+
+  @@index([ownerId], map: "idx_families_owner_id")
+  @@index([deletedAt], map: "idx_families_soft_delete")
+  @@map("families")
+}
+
+model FamilyMember {
+  id           String       @id @default(uuid())
+  familyId     String       @map("family_id")
+  userId       String       @map("user_id")
+  role         FamilyRole   @default(PARENT)
+  status       MemberStatus @default(PENDING)
+  invitedEmail String?      @map("invited_email")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  family Family @relation(fields: [familyId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([familyId, userId], map: "uq_family_members_family_id_user_id")
+  @@index([userId], map: "idx_family_members_user_id")
+  @@index([familyId, status], map: "idx_family_members_family_id_status")
+  @@map("family_members")
+}
+
+model Subscription {
+  id        String    @id @default(uuid())
+  familyId  String    @unique @map("family_id")
+  plan      PlanType  @default(FREE)
+  startedAt DateTime  @default(now()) @map("started_at")
+  expiredAt DateTime? @map("expired_at")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  family Family @relation(fields: [familyId], references: [id])
+
+  @@map("subscriptions")
+}
+
+// ---------------------------------------------------------------------------
+// Child & records
+// ---------------------------------------------------------------------------
+
+model Child {
+  id        String   @id @default(uuid())
+  familyId  String   @map("family_id")
+  name      String
+  birthday  DateTime
+  gender    Gender
+  avatarUrl String?  @map("avatar_url")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  family          Family           @relation(fields: [familyId], references: [id])
+  notes           Note[]
+  milestones      Milestone[]
+  media           Media[]
+  growthRecords   GrowthRecord[]
+  sleepRecords    SleepRecord[]
+  feedingRecords  FeedingRecord[]
+  vaccinations    Vaccination[]
+  aiConversations AiConversation[]
+
+  @@index([familyId], map: "idx_children_family_id")
+  @@index([deletedAt], map: "idx_children_soft_delete")
+  @@map("children")
+}
+
+model Note {
+  id       String  @id @default(uuid())
+  childId  String  @map("child_id")
+  authorId String  @map("author_id")
+  title    String?
+  content  String
+  tags     String[]
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  child  Child   @relation(fields: [childId], references: [id])
+  author User    @relation("NoteAuthor", fields: [authorId], references: [id])
+  media  Media[]
+
+  @@index([childId, createdAt], map: "idx_notes_child_id_created_at")
+  @@index([deletedAt], map: "idx_notes_soft_delete")
+  @@map("notes")
+}
+
+model Milestone {
+  id            String   @id @default(uuid())
+  childId       String   @map("child_id")
+  title         String
+  description   String?
+  milestoneDate DateTime @map("milestone_date")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  child Child @relation(fields: [childId], references: [id])
+
+  @@index([childId, milestoneDate], map: "idx_milestones_child_id_milestone_date")
+  @@index([deletedAt], map: "idx_milestones_soft_delete")
+  @@map("milestones")
+}
+
+model Media {
+  id      String    @id @default(uuid())
+  childId String    @map("child_id")
+  noteId  String?   @map("note_id")
+  url     String
+  type    MediaType
+  takenAt DateTime  @map("taken_at")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  child Child @relation(fields: [childId], references: [id])
+  note  Note? @relation(fields: [noteId], references: [id])
+
+  @@index([childId, takenAt], map: "idx_media_child_id_taken_at")
+  @@index([noteId], map: "idx_media_note_id")
+  @@map("media")
+}
+
+model GrowthRecord {
+  id            String   @id @default(uuid())
+  childId       String   @map("child_id")
+  weightKg      Decimal? @map("weight_kg") @db.Decimal(5, 2)
+  heightCm      Decimal? @map("height_cm") @db.Decimal(5, 2)
+  headCircumCm  Decimal? @map("head_circum_cm") @db.Decimal(5, 2)
+  recordedAt    DateTime @map("recorded_at")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  child Child @relation(fields: [childId], references: [id])
+
+  @@index([childId, recordedAt], map: "idx_growth_records_child_id_recorded_at")
+  @@map("growth_records")
+}
+
+model SleepRecord {
+  id        String    @id @default(uuid())
+  childId   String    @map("child_id")
+  startedAt DateTime  @map("started_at")
+  endedAt   DateTime? @map("ended_at")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  child Child @relation(fields: [childId], references: [id])
+
+  @@index([childId, startedAt], map: "idx_sleep_records_child_id_started_at")
+  @@map("sleep_records")
+}
+
+model FeedingRecord {
+  id         String      @id @default(uuid())
+  childId    String      @map("child_id")
+  category   FeedingType
+  amountMl   Int?        @map("amount_ml")
+  recordedAt DateTime    @map("recorded_at")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  child Child @relation(fields: [childId], references: [id])
+
+  @@index([childId, recordedAt], map: "idx_feeding_records_child_id_recorded_at")
+  @@map("feeding_records")
+}
+
+model Vaccination {
+  id             String        @id @default(uuid())
+  childId        String        @map("child_id")
+  vaccineName    String        @map("vaccine_name")
+  injectionDate  DateTime?     @map("injection_date")
+  status         VaccineStatus @default(UPCOMING)
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  child Child @relation(fields: [childId], references: [id])
+
+  @@index([childId, status], map: "idx_vaccinations_child_id_status")
+  @@map("vaccinations")
+}
+
+// ---------------------------------------------------------------------------
+// Notifications, AI, Audit
+// ---------------------------------------------------------------------------
+
+model Notification {
+  id       String  @id @default(uuid())
+  familyId String  @map("family_id")
+  title    String
+  body     String
+  isRead   Boolean @default(false) @map("is_read")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  family Family @relation(fields: [familyId], references: [id])
+
+  @@index([familyId, isRead], map: "idx_notifications_family_id_is_read")
+  @@map("notifications")
+}
+
+model AiConversation {
+  id      String @id @default(uuid())
+  userId  String @map("user_id")
+  childId String? @map("child_id")
+  kind    AiKind
+  prompt  String
+  result  String
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  user  User   @relation(fields: [userId], references: [id])
+  child Child? @relation(fields: [childId], references: [id])
+
+  @@index([userId, createdAt], map: "idx_ai_conversations_user_id_created_at")
+  @@index([childId], map: "idx_ai_conversations_child_id")
+  @@map("ai_conversations")
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  userId     String?  @map("user_id")
+  action     String
+  entityType String   @map("entity_type")
+  entityId   String?  @map("entity_id")
+  metadata   Json?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id])
+
+  @@index([entityType, entityId], map: "idx_audit_logs_entity_type_entity_id")
+  @@index([userId], map: "idx_audit_logs_user_id")
+  @@map("audit_logs")
+}
