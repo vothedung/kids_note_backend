@@ -16,6 +16,13 @@
   input,textarea{font-family:'Inter',sans-serif;outline:none}
   ::-webkit-scrollbar{display:none}
   @keyframes kn-fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes kn-pop{0%{opacity:0;transform:scale(.7)}70%{transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+  @keyframes kn-dot{from{width:6px}to{width:22px}}
+  @keyframes kn-dot-bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+  @keyframes kn-toast-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes kn-notif-in{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes kn-sheet-up{from{opacity:0;transform:translateY(100%)}to{opacity:1;transform:translateY(0)}}
+  @keyframes kn-spin{to{transform:rotate(360deg)}}
 </style>
 </helmet>
 
@@ -50,10 +57,20 @@
 
       <!-- ============ SPLASH ============ -->
       <sc-if value="{{ screenIs.splash }}" hint-placeholder-val="{{ false }}">
-        <div onClick="{{ goOnb1 }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:linear-gradient(160deg,#F0B860,#E8785A);cursor:pointer">
-          <div style="width:88px;height:88px;border-radius:26px;background:rgba(255,255,255,.25)"></div>
-          <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:26px;color:#fff">Kids Note</div>
-          <div style="font-size:13px;color:rgba(255,255,255,.85)">tap to continue</div>
+        <div onClick="{{ goOnb1 }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:linear-gradient(160deg,#F0B860,#E8785A);cursor:pointer;position:relative;overflow:hidden">
+          <div style="position:absolute;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.08);top:-70px;right:-60px"></div>
+          <div style="position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.08);bottom:-50px;left:-50px"></div>
+          <div style="width:96px;height:96px;border-radius:28px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(0,0,0,.12)">
+            <svg width="52" height="52" viewBox="0 0 24 24" fill="none">
+              <path d="M12 3c-3 2-6 2-6 2v6c0 4.5 2.6 7.3 6 8.5 3.4-1.2 6-4 6-8.5V5s-3 0-6-2z" fill="#fff" fill-opacity=".9"/>
+              <path d="M9.2 12.2l1.9 1.9 3.7-4" stroke="#E8785A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div style="text-align:center">
+            <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:30px;color:#fff;letter-spacing:.2px">Kids Note</div>
+            <div style="font-size:13.5px;color:rgba(255,255,255,.9);margin-top:4px">Every little moment, kept forever</div>
+          </div>
+          <div style="font-size:12px;color:rgba(255,255,255,.75);margin-top:10px">tap to continue</div>
         </div>
       </sc-if>
 
@@ -61,18 +78,18 @@
       <sc-if value="{{ screenIs.onb1 }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;display:flex;flex-direction:column;padding:60px 28px 32px;background:linear-gradient(180deg,#FDF3E9,#FBF6F0)">
           <div style="flex:1;display:flex;align-items:center;justify-content:center">
-            <div style="width:210px;height:210px;border-radius:50%;background:linear-gradient(145deg,#F0B860,#E8785A);display:flex;align-items:center;justify-content:center;box-shadow:0 20px 40px rgba(232,120,90,.28)">
-              <div style="width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.28)"></div>
+            <div style="width:210px;height:210px;border-radius:50%;background:linear-gradient(145deg,#F0B860,#E8785A);display:flex;align-items:center;justify-content:center;box-shadow:0 20px 40px rgba(232,120,90,.28);animation:kn-pop .6s cubic-bezier(.34,1.56,.64,1) both">
+              <div style="width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.28);animation:kn-pop .6s cubic-bezier(.34,1.56,.64,1) .1s both"></div>
             </div>
           </div>
-          <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:26px;color:#2B2320;text-align:center;margin-bottom:10px">Every little moment,<br>kept forever</div>
-          <div style="font-size:14.5px;line-height:1.6;color:#8A7A6D;text-align:center;padding:0 8px">A warm, private space to capture your child's growth, milestones, and memories.</div>
-          <div style="display:flex;justify-content:center;gap:7px;margin:26px 0 20px">
-            <div style="width:22px;height:6px;border-radius:99px;background:#E8785A"></div>
+          <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:26px;color:#2B2320;text-align:center;margin-bottom:10px;animation:kn-fade .5s ease .15s both">Every little moment,<br>kept forever</div>
+          <div style="font-size:14.5px;line-height:1.6;color:#8A7A6D;text-align:center;padding:0 8px;animation:kn-fade .5s ease .25s both">A warm, private space to capture your child's growth, milestones, and memories.</div>
+          <div style="display:flex;justify-content:center;gap:7px;margin:26px 0 20px;animation:kn-fade .5s ease .3s both">
+            <div style="width:22px;height:6px;border-radius:99px;background:#E8785A;animation:kn-dot .4s ease .3s both"></div>
             <div style="width:6px;height:6px;border-radius:99px;background:#E3D6C6"></div>
             <div style="width:6px;height:6px;border-radius:99px;background:#E3D6C6"></div>
           </div>
-          <div style="display:flex;gap:10px">
+          <div style="display:flex;gap:10px;animation:kn-fade .5s ease .35s both">
             <button onClick="{{ goLogin }}" style="flex:none;padding:16px 8px;border:none;background:none;color:#8A7A6D;font-size:15px;font-weight:600;cursor:pointer">Skip</button>
             <button onClick="{{ goOnb2 }}" style="flex:1;padding:16px;border:none;border-radius:16px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Next</button>
           </div>
@@ -82,18 +99,18 @@
       <sc-if value="{{ screenIs.onb2 }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;display:flex;flex-direction:column;padding:60px 28px 32px;background:linear-gradient(180deg,#F2F6EE,#FBF6F0)">
           <div style="flex:1;display:flex;align-items:center;justify-content:center">
-            <div style="width:210px;height:210px;border-radius:50%;background:linear-gradient(145deg,#9AB78F,#7C9473);display:flex;align-items:center;justify-content:center;box-shadow:0 20px 40px rgba(124,148,115,.28)">
-              <div style="width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.28)"></div>
+            <div style="width:210px;height:210px;border-radius:50%;background:linear-gradient(145deg,#9AB78F,#7C9473);display:flex;align-items:center;justify-content:center;box-shadow:0 20px 40px rgba(124,148,115,.28);animation:kn-pop .6s cubic-bezier(.34,1.56,.64,1) both">
+              <div style="width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.28);animation:kn-pop .6s cubic-bezier(.34,1.56,.64,1) .1s both"></div>
             </div>
           </div>
-          <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:26px;color:#2B2320;text-align:center;margin-bottom:10px">Watch them grow,<br>with confidence</div>
-          <div style="font-size:14.5px;line-height:1.6;color:#8A7A6D;text-align:center;padding:0 8px">Track height, weight, sleep and feeding — compared gently against WHO growth standards.</div>
-          <div style="display:flex;justify-content:center;gap:7px;margin:26px 0 20px">
+          <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:26px;color:#2B2320;text-align:center;margin-bottom:10px;animation:kn-fade .5s ease .15s both">Watch them grow,<br>with confidence</div>
+          <div style="font-size:14.5px;line-height:1.6;color:#8A7A6D;text-align:center;padding:0 8px;animation:kn-fade .5s ease .25s both">Track height, weight, sleep and feeding — compared gently against WHO growth standards.</div>
+          <div style="display:flex;justify-content:center;gap:7px;margin:26px 0 20px;animation:kn-fade .5s ease .3s both">
             <div style="width:6px;height:6px;border-radius:99px;background:#E3D6C6"></div>
-            <div style="width:22px;height:6px;border-radius:99px;background:#7C9473"></div>
+            <div style="width:22px;height:6px;border-radius:99px;background:#7C9473;animation:kn-dot .4s ease .3s both"></div>
             <div style="width:6px;height:6px;border-radius:99px;background:#E3D6C6"></div>
           </div>
-          <div style="display:flex;gap:10px">
+          <div style="display:flex;gap:10px;animation:kn-fade .5s ease .35s both">
             <button onClick="{{ goLogin }}" style="flex:none;padding:16px 8px;border:none;background:none;color:#8A7A6D;font-size:15px;font-weight:600;cursor:pointer">Skip</button>
             <button onClick="{{ goOnb3 }}" style="flex:1;padding:16px;border:none;border-radius:16px;background:#7C9473;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Next</button>
           </div>
@@ -103,18 +120,18 @@
       <sc-if value="{{ screenIs.onb3 }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;display:flex;flex-direction:column;padding:60px 28px 32px;background:linear-gradient(180deg,#FBF0E4,#FBF6F0)">
           <div style="flex:1;display:flex;align-items:center;justify-content:center">
-            <div style="width:210px;height:210px;border-radius:50%;background:linear-gradient(145deg,#F3C374,#F0B860);display:flex;align-items:center;justify-content:center;box-shadow:0 20px 40px rgba(240,184,96,.3)">
-              <div style="width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.28)"></div>
+            <div style="width:210px;height:210px;border-radius:50%;background:linear-gradient(145deg,#F3C374,#F0B860);display:flex;align-items:center;justify-content:center;box-shadow:0 20px 40px rgba(240,184,96,.3);animation:kn-pop .6s cubic-bezier(.34,1.56,.64,1) both">
+              <div style="width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.28);animation:kn-pop .6s cubic-bezier(.34,1.56,.64,1) .1s both"></div>
             </div>
           </div>
-          <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:26px;color:#2B2320;text-align:center;margin-bottom:10px">Ask AI anything<br>about your child</div>
-          <div style="font-size:14.5px;line-height:1.6;color:#8A7A6D;text-align:center;padding:0 8px">Get instant answers, auto-written journal entries, and gentle growth insights.</div>
-          <div style="display:flex;justify-content:center;gap:7px;margin:26px 0 20px">
+          <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:26px;color:#2B2320;text-align:center;margin-bottom:10px;animation:kn-fade .5s ease .15s both">Ask AI anything<br>about your child</div>
+          <div style="font-size:14.5px;line-height:1.6;color:#8A7A6D;text-align:center;padding:0 8px;animation:kn-fade .5s ease .25s both">Get instant answers, auto-written journal entries, and gentle growth insights.</div>
+          <div style="display:flex;justify-content:center;gap:7px;margin:26px 0 20px;animation:kn-fade .5s ease .3s both">
             <div style="width:6px;height:6px;border-radius:99px;background:#E3D6C6"></div>
             <div style="width:6px;height:6px;border-radius:99px;background:#E3D6C6"></div>
-            <div style="width:22px;height:6px;border-radius:99px;background:#F0B860"></div>
+            <div style="width:22px;height:6px;border-radius:99px;background:#F0B860;animation:kn-dot .4s ease .3s both"></div>
           </div>
-          <button onClick="{{ goLogin }}" style="padding:16px;border:none;border-radius:16px;background:#2B2320;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Get Started</button>
+          <button onClick="{{ goLogin }}" style="padding:16px;border:none;border-radius:16px;background:#2B2320;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif;animation:kn-fade .5s ease .35s both">Get Started</button>
         </div>
       </sc-if>
 
@@ -123,9 +140,18 @@
         <div style="flex:1;display:flex;flex-direction:column;padding:70px 28px 36px;background:{{ t.bg }}">
           <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:28px;color:{{ t.text }};margin-bottom:6px">Welcome back</div>
           <div style="font-size:14px;color:{{ t.textSecondary }};margin-bottom:32px">Sign in to keep your family's story going.</div>
-          <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:18px">
-            <input placeholder="Email address" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px">
-            <input type="password" placeholder="Password" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px">
+          <div style="display:flex;flex-direction:column;gap:18px;margin-bottom:18px">
+            <div>
+              <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Email</div>
+              <input placeholder="Email address" style="width:100%;padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px">
+            </div>
+            <div>
+              <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Password</div>
+              <div style="position:relative">
+                <input type="{{ loginPassType }}" placeholder="Password" style="width:100%;padding:15px 44px 15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;box-sizing:border-box">
+                <button onClick="{{ toggleLoginPass }}" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:4px;color:{{ t.textSecondary }}">{{ loginPassIcon }}</button>
+              </div>
+            </div>
           </div>
           <div style="text-align:right;margin-bottom:18px"><span onClick="{{ goForgotPassword }}" style="font-size:13px;color:{{ t.textSecondary }};cursor:pointer">Forgot password?</span></div>
           <button onClick="{{ goCreateFamily }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif;margin-bottom:22px">Sign In</button>
@@ -157,15 +183,53 @@
       <sc-if value="{{ screenIs.register }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;display:flex;flex-direction:column;padding:58px 28px 32px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:22px;color:{{ t.text }}">Create account</div>
           </div>
-          <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px">
-            <input placeholder="Full name" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px" />
-            <input placeholder="Email address" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px" />
-            <input type="password" placeholder="Password" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px" />
+          <div style="display:flex;flex-direction:column;gap:18px;margin-bottom:20px">
+            <div>
+              <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Full name</div>
+              <input placeholder="Full name" style="width:100%;padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px" />
+            </div>
+            <div>
+              <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Email</div>
+              <input placeholder="Email address" style="width:100%;padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px" />
+            </div>
+            <div>
+              <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Password</div>
+              <div style="position:relative">
+                <input type="{{ regPassType }}" placeholder="Password" style="width:100%;padding:15px 44px 15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;box-sizing:border-box" />
+                <button onClick="{{ toggleRegPass }}" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:4px;color:{{ t.textSecondary }}">{{ regPassIcon }}</button>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Confirm password</div>
+              <div style="position:relative">
+                <input type="{{ regConfirmType }}" placeholder="Re-enter password" style="width:100%;padding:15px 44px 15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;box-sizing:border-box" />
+                <button onClick="{{ toggleRegConfirm }}" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:4px;color:{{ t.textSecondary }}">{{ regConfirmIcon }}</button>
+              </div>
+            </div>
           </div>
-          <button onClick="{{ goCreateFamily }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Create Account</button>
+          <button onClick="{{ goRegisterOtp }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif;margin-bottom:22px">Create Account</button>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:22px">
+            <div style="flex:1;height:1px;background:{{ t.border }}"></div>
+            <div style="font-size:12px;color:{{ t.textSecondary }}">or sign up with</div>
+            <div style="flex:1;height:1px;background:{{ t.border }}"></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <button onClick="{{ goCreateFamily }}" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;font-weight:600;cursor:pointer">
+              <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 01-1.8 2.72v2.26h2.9c1.7-1.57 2.7-3.87 2.7-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.84.86-3.06.86-2.35 0-4.34-1.59-5.05-3.72H.95v2.33A9 9 0 009 18z"/><path fill="#FBBC05" d="M3.95 10.7A5.4 5.4 0 013.68 9c0-.59.1-1.17.27-1.7V4.97H.95A9 9 0 000 9c0 1.45.35 2.83.95 4.03l3-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.51.46 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 00.95 4.97l3 2.33C4.66 5.17 6.65 3.58 9 3.58z"/></svg>
+              <span>Continue with Google</span>
+            </button>
+            <button onClick="{{ goCreateFamily }}" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;font-weight:600;cursor:pointer">
+              <svg width="16" height="18" viewBox="0 0 16 18" fill="{{ t.text }}"><path d="M13.1 9.5c0-2.1 1.7-3.1 1.8-3.2-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.5.8-3.1.8-.6 0-1.6-.7-2.6-.7-1.3 0-2.6.8-3.3 2-1.4 2.4-.4 6.1 1 8.1.7 1 1.5 2.1 2.6 2 1-.1 1.4-.7 2.7-.7s1.6.7 2.7.6c1.1 0 1.8-1 2.5-2 .8-1.2 1.1-2.3 1.1-2.4-.1 0-2.1-.8-2.4-3zM11 3.3c.6-.7 1-1.7.9-2.7-.9 0-1.9.6-2.5 1.3-.5.6-1 1.6-.9 2.6 1 .1 1.9-.5 2.5-1.2z"/></svg>
+              <span>Continue with Apple</span>
+            </button>
+            <button onClick="{{ goCreateFamily }}" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;font-weight:600;cursor:pointer">
+              <svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="9" fill="#1877F2"/><path fill="#fff" d="M11.9 11.6l.4-2.6h-2.5V7.3c0-.7.3-1.4 1.5-1.4h1.1V3.7s-1-.2-2-.2c-2 0-3.3 1.2-3.3 3.4V9H4.9v2.6h2.2v6.3c.6.1 1.2.1 1.8.1s1.2 0 1.8-.1v-6.3h2.2z"/></svg>
+              <span>Continue with Facebook</span>
+            </button>
+          </div>
           <div style="flex:1"></div>
           <div style="text-align:center;font-size:13.5px;color:{{ t.textSecondary }}">Already have an account? <span onClick="{{ goLogin }}" style="color:#E8785A;font-weight:600;cursor:pointer">Sign in</span></div>
         </div>
@@ -175,12 +239,67 @@
       <sc-if value="{{ screenIs.forgotPassword }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;display:flex;flex-direction:column;padding:58px 28px 32px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:22px;color:{{ t.text }}">Reset password</div>
           </div>
-          <div style="font-size:14px;color:{{ t.textSecondary }};margin-bottom:22px;line-height:1.5">Enter the email linked to your account and we'll send a reset link.</div>
-          <input placeholder="Email address" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:22px" />
-          <button onClick="{{ goLogin }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Send Reset Link</button>
+          <div style="display:flex;justify-content:center;margin-bottom:26px">
+            <div style="width:88px;height:88px;border-radius:50%;background:{{ t.accentSoft }};display:flex;align-items:center;justify-content:center">
+              <svg width="38" height="38" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="#E8785A" stroke-width="1.8"/><path d="M3.5 6.5L12 13l8.5-6.5" stroke="#E8785A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <div style="font-size:14px;color:{{ t.textSecondary }};margin-bottom:22px;line-height:1.5;text-align:center">Enter the email linked to your account and we'll send a reset link.</div>
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Email</div>
+          <input placeholder="Email address" style="width:100%;padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:22px" />
+          <button onClick="{{ goOtp }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Send Reset Link</button>
+          <div style="flex:1"></div>
+          <div style="text-align:center;font-size:13.5px;color:{{ t.textSecondary }}">Remember your password? <span onClick="{{ goLogin }}" style="color:#E8785A;font-weight:600;cursor:pointer">Sign in</span></div>
+        </div>
+      </sc-if>
+
+      <!-- ============ RESET PASSWORD ============ -->
+      <sc-if value="{{ screenIs.resetPassword }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column;padding:58px 28px 32px;background:{{ t.bg }}">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="{{ t.text }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+            <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:22px;color:{{ t.text }}">New password</div>
+          </div>
+          <div style="font-size:14px;color:{{ t.textSecondary }};margin-bottom:22px;line-height:1.5">Enter your new password below.</div>
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">New password</div>
+          <div style="position:relative;margin-bottom:18px">
+            <input type="{{ resetPassType }}" placeholder="New password" style="width:100%;padding:15px 44px 15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;box-sizing:border-box" />
+            <button onClick="{{ toggleResetPass }}" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:4px;color:{{ t.textSecondary }}">{{ resetPassIcon }}</button>
+          </div>
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Confirm password</div>
+          <div style="position:relative;margin-bottom:26px">
+            <input type="{{ resetConfirmType }}" placeholder="Re-enter password" style="width:100%;padding:15px 44px 15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;box-sizing:border-box" />
+            <button onClick="{{ toggleResetConfirm }}" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:4px;color:{{ t.textSecondary }}">{{ resetConfirmIcon }}</button>
+          </div>
+          <div style="flex:1"></div>
+          <button onClick="{{ submitResetPassword }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Reset Password</button>
+        </div>
+      </sc-if>
+
+      <!-- ============ OTP VERIFY ============ -->
+      <sc-if value="{{ screenIs.otpVerify }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column;padding:58px 28px 32px;background:{{ t.bg }}">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px">
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="{{ t.text }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+            <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:22px;color:{{ t.text }}">Verify code</div>
+          </div>
+          <div style="display:flex;justify-content:center;margin-bottom:22px">
+            <div style="width:88px;height:88px;border-radius:50%;background:{{ t.accentSoft }};display:flex;align-items:center;justify-content:center">
+              <svg width="38" height="38" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="#E8785A" stroke-width="1.8"></rect><path d="M3.5 6.5L12 13l8.5-6.5" stroke="#E8785A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+          </div>
+          <div style="font-size:14px;color:{{ t.textSecondary }};margin-bottom:26px;line-height:1.5;text-align:center">We sent a 6-digit code to your email. Enter it below to continue.</div>
+          <div style="display:flex;gap:8px;justify-content:center;margin-bottom:22px">
+            <sc-for list="{{ otpDigits }}" as="d" hint-placeholder-count="6">
+              <input value="{{ d.value }}" onChange="{{ d.onChange }}" onKeyDown="{{ d.onKeyDown }}" id="{{ d.id }}" maxlength="1" inputmode="numeric" style="width:42px;height:52px;text-align:center;font-size:20px;font-weight:700;border-radius:12px;border:1.5px solid {{ d.border }};background:{{ t.card }};color:{{ t.text }};box-sizing:border-box" />
+            </sc-for>
+          </div>
+          <div style="text-align:center;font-size:13px;color:{{ t.textSecondary }};margin-bottom:26px">Didn't get a code? <span onClick="{{ resendOtp }}" style="color:#E8785A;font-weight:600;cursor:pointer">Resend</span></div>
+          <div style="flex:1"></div>
+          <button onClick="{{ verifyOtp }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Verify</button>
         </div>
       </sc-if>
 
@@ -200,7 +319,7 @@
             <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:99px;background:{{ t.card }};border:1px solid {{ t.border }};font-size:13px;color:{{ t.text }}">jamie@family.com</div>
           </div>
           <div style="flex:1"></div>
-          <button onClick="{{ goAddChild }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Continue</button>
+          <button onClick="{{ saveCreateFamily }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Continue</button>
         </div>
       </sc-if>
 
@@ -223,13 +342,17 @@
             <button onClick="{{ setGenderOther }}" style="flex:1;padding:12px;border-radius:12px;border:1.5px solid {{ genderOtherBorder }};background:{{ genderOtherBg }};color:{{ genderOtherColor }};font-size:14px;font-weight:600;cursor:pointer">Other</button>
           </div>
           <div style="flex:1"></div>
-          <button onClick="{{ goDashboard }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Add Child</button>
+          <button onClick="{{ saveAddChild }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Add Child</button>
         </div>
       </sc-if>
 
       <!-- ============ DASHBOARD ============ -->
       <sc-if value="{{ screenIs.dashboard }}" hint-placeholder-val="{{ false }}">
-        <div style="flex:1;overflow:auto;padding:58px 20px 12px;background:{{ t.bg }}">
+        <div onTouchStart="{{ pull.onStart }}" onTouchMove="{{ pull.onMove }}" onTouchEnd="{{ pull.onEnd }}" style="flex:1;overflow:auto;padding:58px 20px 12px;background:{{ t.bg }}">
+          <div style="height:{{ pull.height }}px;overflow:hidden;transition:{{ pull.transition }};display:flex;align-items:center;justify-content:center;gap:8px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="{{ pull.iconStyle }}"><path d="M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3" stroke="#E8785A" stroke-width="2" stroke-linecap="round"></path></svg>
+            <div style="font-size:12px;color:{{ t.textSecondary }}">{{ pull.label }}</div>
+          </div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
             <div>
               <div style="font-size:12.5px;color:{{ t.textSecondary }}">Good afternoon</div>
@@ -280,6 +403,67 @@
               <div style="font-size:18px">❤️</div><div style="font-size:13px;font-weight:600;color:{{ t.text }}">Health</div>
             </button>
           </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px">
+            <div style="background:{{ t.card }};border:1px solid {{ t.border }};border-radius:14px;padding:12px 10px;text-align:center">
+              <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:17px;color:{{ t.text }}">5</div>
+              <div style="font-size:10.5px;color:{{ t.textSecondary }}">Notes this week</div>
+            </div>
+            <div style="background:{{ t.card }};border:1px solid {{ t.border }};border-radius:14px;padding:12px 10px;text-align:center">
+              <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:17px;color:{{ t.text }}">24</div>
+              <div style="font-size:10.5px;color:{{ t.textSecondary }}">Photos added</div>
+            </div>
+            <div style="background:{{ t.card }};border:1px solid {{ t.border }};border-radius:14px;padding:12px 10px;text-align:center">
+              <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:17px;color:{{ t.text }}">11h 30m</div>
+              <div style="font-size:10.5px;color:{{ t.textSecondary }}">Avg sleep</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div style="font-size:13px;font-weight:700;color:{{ t.text }}">Recent milestones</div>
+            <div onClick="{{ goTimeline }}" style="font-size:12px;color:#E8785A;font-weight:600;cursor:pointer">View all</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
+            <div onClick="{{ goTimeline }}" style="display:flex;align-items:center;gap:12px;background:{{ t.card }};border:1px solid {{ t.border }};border-radius:14px;padding:11px 14px;cursor:pointer">
+              <div style="width:8px;height:8px;border-radius:50%;background:#E8785A;flex:none"></div>
+              <div style="flex:1;font-size:13px;color:{{ t.text }}">First steps</div>
+              <div style="font-size:11.5px;color:{{ t.textSecondary }}">Today</div>
+            </div>
+            <div onClick="{{ goTimeline }}" style="display:flex;align-items:center;gap:12px;background:{{ t.card }};border:1px solid {{ t.border }};border-radius:14px;padding:11px 14px;cursor:pointer">
+              <div style="width:8px;height:8px;border-radius:50%;background:#E8785A;flex:none"></div>
+              <div style="flex:1;font-size:13px;color:{{ t.text }}">Said "mama"</div>
+              <div style="font-size:11.5px;color:{{ t.textSecondary }}">Aug 10</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#F3C374,#E8785A);border-radius:18px;padding:16px;margin-bottom:8px">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:16px;flex:none">✨</div>
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:2px">AI tip of the day</div>
+              <div style="font-size:12px;color:rgba(255,255,255,.9);line-height:1.4">Toddlers this age love repeating simple words — try naming objects during play.</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ EDIT PHOTO ============ -->
+      <sc-if value="{{ screenIs.editPhoto }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column;padding:58px 20px 24px;background:{{ t.bg }}">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="{{ t.text }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+            <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">Edit Photo</div>
+          </div>
+          <div style="width:100%;aspect-ratio:1;border-radius:18px;background:{{ previewColor }};margin-bottom:20px"></div>
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Caption</div>
+          <input placeholder="Add a caption…" style="width:100%;padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:20px;box-sizing:border-box" />
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px">Move to album</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ albumMonths }}" as="m" hint-placeholder-count="3">
+              <div style="padding:8px 14px;border-radius:99px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:12.5px;cursor:pointer">{{ m.label }}</div>
+            </sc-for>
+          </div>
+          <div style="flex:1"></div>
+          <button onClick="{{ saveEditPhoto }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Save Changes</button>
         </div>
       </sc-if>
 
@@ -287,7 +471,7 @@
       <sc-if value="{{ screenIs.childList }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;overflow:auto;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:20px;color:{{ t.text }}">Children</div>
           </div>
           <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px">
@@ -308,10 +492,10 @@
         <div style="flex:1;overflow:auto;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
             <div style="display:flex;align-items:center;gap:12px">
-              <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+              <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
               <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:20px;color:{{ t.text }}">Profile</div>
             </div>
-            <button onClick="{{ goEditChild }}" style="padding:8px 14px;border-radius:10px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:12.5px;font-weight:600;cursor:pointer">Edit</button>
+            <button onClick="{{ goEditChild }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 20h4l10.5-10.5a2 2 0 000-2.8l-1.2-1.2a2 2 0 00-2.8 0L4 16v4z" stroke="#E8785A" stroke-width="1.8" stroke-linejoin="round"></path></svg></button>
           </div>
           <div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:22px">
             <div style="width:88px;height:88px;border-radius:50%;background:{{ currentChildColor }};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:26px;font-family:'Fredoka',sans-serif">{{ currentChild.initial }}</div>
@@ -329,7 +513,7 @@
       <sc-if value="{{ screenIs.editChild }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;display:flex;flex-direction:column;padding:58px 28px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:20px;color:{{ t.text }}">Edit Child</div>
           </div>
           <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Name</div>
@@ -337,13 +521,17 @@
           <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Birthday</div>
           <input type="date" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:26px" />
           <div style="flex:1"></div>
-          <button onClick="{{ back }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Save Changes</button>
+          <button onClick="{{ saveEditChild }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Save Changes</button>
         </div>
       </sc-if>
 
       <!-- ============ TIMELINE ============ -->
       <sc-if value="{{ screenIs.timeline }}" hint-placeholder-val="{{ false }}">
-        <div style="flex:1;overflow:auto;padding:58px 20px 90px;background:{{ t.bg }};position:relative">
+        <div onTouchStart="{{ pull.onStart }}" onTouchMove="{{ pull.onMove }}" onTouchEnd="{{ pull.onEnd }}" style="flex:1;overflow:auto;padding:58px 20px 90px;background:{{ t.bg }};position:relative">
+          <div style="height:{{ pull.height }}px;overflow:hidden;transition:{{ pull.transition }};display:flex;align-items:center;justify-content:center;gap:8px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="{{ pull.iconStyle }}"><path d="M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3" stroke="#E8785A" stroke-width="2" stroke-linecap="round"></path></svg>
+            <div style="font-size:12px;color:{{ t.textSecondary }}">{{ pull.label }}</div>
+          </div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:22px;color:{{ t.text }}">Timeline</div>
             <button onClick="{{ goSettings }}" style="width:36px;height:36px;border-radius:50%;background:{{ currentChildColor }};border:none;color:#fff;font-weight:700;font-size:13.5px;cursor:pointer">{{ currentChild.initial }}</button>
@@ -354,6 +542,16 @@
               <button onClick="{{ f.select }}" style="flex:none;padding:8px 15px;border-radius:99px;border:1px solid {{ f.borderColor }};background:{{ f.bgColor }};color:{{ f.textColor }};font-size:13px;font-weight:600;cursor:pointer">{{ f.label }}</button>
             </sc-for>
           </div>
+          <sc-if value="{{ timelineEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:50px 20px">
+              <div style="width:72px;height:72px;border-radius:50%;background:{{ t.accentSoft }};display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#E8785A" stroke-width="1.7"></circle><path d="M12 7v5l3.5 2" stroke="#E8785A" stroke-width="1.7" stroke-linecap="round"></path></svg>
+              </div>
+              <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:16px;color:{{ t.text }};margin-bottom:6px">No entries yet</div>
+              <div style="font-size:13px;color:{{ t.textSecondary }};line-height:1.5;margin-bottom:18px">There's nothing tagged here yet. Try a different filter, or add a new note.</div>
+              <button onClick="{{ goAddNote }}" style="padding:11px 20px;border-radius:12px;border:none;background:#E8785A;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Add Note</button>
+            </div>
+          </sc-if>
           <div style="display:flex;flex-direction:column;gap:0">
             <sc-for list="{{ timelineItems }}" as="item" hint-placeholder-count="4">
               <div style="display:flex;gap:12px;padding-bottom:18px;position:relative">
@@ -381,15 +579,23 @@
         <div style="flex:1;overflow:auto;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
             <div style="display:flex;align-items:center;gap:12px">
-              <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+              <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
               <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">Note</div>
             </div>
-            <button onClick="{{ goEditNote }}" style="padding:8px 14px;border-radius:10px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:12.5px;font-weight:600;cursor:pointer">Edit</button>
+            <button onClick="{{ goEditNote }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 20h4l10.5-10.5a2 2 0 000-2.8l-1.2-1.2a2 2 0 00-2.8 0L4 16v4z" stroke="#E8785A" stroke-width="1.8" stroke-linejoin="round"></path></svg></button>
           </div>
           <div style="font-size:11px;font-weight:700;color:{{ selectedNote.tagColor }};text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">{{ selectedNote.tag }}</div>
           <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }};margin-bottom:4px">{{ selectedNote.title }}</div>
           <div style="font-size:12.5px;color:{{ t.textSecondary }};margin-bottom:16px">{{ selectedNote.date }}</div>
-          <div style="background:{{ t.card }};border:1px solid {{ t.border }};border-radius:16px;padding:16px;font-size:14px;color:{{ t.text }};line-height:1.6">{{ selectedNote.desc }}</div>
+          <div style="background:{{ t.card }};border:1px solid {{ t.border }};border-radius:16px;padding:16px;font-size:14px;color:{{ t.text }};line-height:1.6;margin-bottom:16px">{{ selectedNote.desc }}</div>
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px">Attached media</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+            <div style="aspect-ratio:1;border-radius:12px;background:#F0B860"></div>
+            <div style="aspect-ratio:1;border-radius:12px;background:#E8785A;position:relative;display:flex;align-items:center;justify-content:center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="rgba(0,0,0,.35)"/><path d="M10 8l6 4-6 4V8z" fill="#fff"/></svg>
+            </div>
+          </div>
+          <button onClick="{{ openDeleteNoteConfirm }}" style="width:100%;margin-top:18px;padding:14px;border-radius:12px;border:1px solid rgba(232,120,90,.4);background:none;color:#E8785A;font-size:13.5px;font-weight:700;cursor:pointer">Delete Note</button>
         </div>
       </sc-if>
 
@@ -397,12 +603,22 @@
       <sc-if value="{{ screenIs.editNote }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;display:flex;flex-direction:column;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">Edit Note</div>
           </div>
-          <textarea style="flex:none;height:130px;padding:14px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14px;resize:none;margin-bottom:20px">{{ selectedNote.desc }}</textarea>
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Date</div>
+          <input type="date" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:18px" />
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Note</div>
+          <textarea style="flex:none;height:110px;padding:14px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14px;resize:none;margin-bottom:18px">{{ selectedNote.desc }}</textarea>
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px">Attached media</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px">
+            <div style="aspect-ratio:1;border-radius:12px;background:#F0B860;position:relative">
+              <div style="position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,.45);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer">✕</div>
+            </div>
+            <div style="aspect-ratio:1;border-radius:12px;border:1.5px dashed {{ t.border }};background:{{ t.card }};display:flex;align-items:center;justify-content:center;color:{{ t.textSecondary }};font-size:22px;cursor:pointer">+</div>
+          </div>
           <div style="flex:1"></div>
-          <button onClick="{{ back }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Save Changes</button>
+          <button onClick="{{ saveEditNote }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Save Changes</button>
         </div>
       </sc-if>
 
@@ -410,13 +626,30 @@
       <sc-if value="{{ screenIs.addNote }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;display:flex;flex-direction:column;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">New Note</div>
           </div>
-          <textarea placeholder="What happened today?" style="flex:none;height:110px;padding:14px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14px;resize:none;margin-bottom:14px"></textarea>
-          <div style="display:flex;gap:10px;margin-bottom:20px">
-            <button style="flex:1;padding:14px;border-radius:14px;border:1.5px dashed {{ t.border }};background:{{ t.card }};color:{{ t.textSecondary }};font-size:13px;font-weight:600;cursor:pointer">📷 Add Photo</button>
-            <button style="flex:1;padding:14px;border-radius:14px;border:1.5px dashed {{ t.border }};background:{{ t.card }};color:{{ t.textSecondary }};font-size:13px;font-weight:600;cursor:pointer">🎥 Add Video</button>
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Date</div>
+          <input type="date" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:18px" />
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Note</div>
+          <textarea placeholder="What happened today?" style="flex:none;height:100px;padding:14px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14px;resize:none;margin-bottom:14px"></textarea>
+          <div style="display:flex;gap:10px;margin-bottom:14px">
+            <button onClick="{{ addNotePhoto }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 10px;border-radius:16px;border:1.5px dashed #E8B7A5;background:{{ t.accentSoft }};color:#C4633F;cursor:pointer">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="2.5" y="5.5" width="19" height="14" rx="3" stroke="#E8785A" stroke-width="1.8"></rect><circle cx="8.5" cy="11" r="2" stroke="#E8785A" stroke-width="1.8"></circle><path d="M4 17l4.5-4.5a2 2 0 012.6-.1L15 16" stroke="#E8785A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M14 14l1.7-1.7a2 2 0 012.6-.1L21 15" stroke="#E8785A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <div style="font-size:12.5px;font-weight:700">Add Photo</div>
+            </button>
+            <button onClick="{{ addNoteVideo }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 10px;border-radius:16px;border:1.5px dashed #A6BFDD;background:rgba(107,135,190,.12);color:#4A6699;cursor:pointer">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="2.5" y="6" width="13" height="12" rx="3" stroke="#6B87BE" stroke-width="1.8"></rect><path d="M15.5 10.5l5-2.7v8.4l-5-2.7v-3z" stroke="#6B87BE" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+              <div style="font-size:12.5px;font-weight:700">Add Video</div>
+            </button>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px">
+            <sc-for list="{{ noteMedia }}" as="m" hint-placeholder-count="2">
+              <div style="aspect-ratio:1;border-radius:12px;background:{{ m.color }};position:relative;display:flex;align-items:center;justify-content:center">
+                <div style="color:#fff;font-size:20px">{{ m.icon }}</div>
+                <div onClick="{{ m.remove }}" style="position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,.45);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer">✕</div>
+              </div>
+            </sc-for>
           </div>
           <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px">Tags</div>
           <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px">
@@ -431,10 +664,17 @@
 
       <!-- ============ GROWTH ============ -->
       <sc-if value="{{ screenIs.growth }}" hint-placeholder-val="{{ false }}">
-        <div style="flex:1;overflow:auto;padding:58px 20px 90px;background:{{ t.bg }}">
+        <div onTouchStart="{{ pull.onStart }}" onTouchMove="{{ pull.onMove }}" onTouchEnd="{{ pull.onEnd }}" style="flex:1;overflow:auto;padding:58px 20px 90px;background:{{ t.bg }}">
+          <div style="height:{{ pull.height }}px;overflow:hidden;transition:{{ pull.transition }};display:flex;align-items:center;justify-content:center;gap:8px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="{{ pull.iconStyle }}"><path d="M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3" stroke="#E8785A" stroke-width="2" stroke-linecap="round"></path></svg>
+            <div style="font-size:12px;color:{{ t.textSecondary }}">{{ pull.label }}</div>
+          </div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:22px;color:{{ t.text }}">Growth</div>
-            <button onClick="{{ goSettings }}" style="width:36px;height:36px;border-radius:50%;background:{{ currentChildColor }};border:none;color:#fff;font-weight:700;font-size:13.5px;cursor:pointer">{{ currentChild.initial }}</button>
+            <div style="display:flex;gap:8px;align-items:center">
+              <button onClick="{{ goAddGrowth }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.accentSoft }};color:#E8785A;font-size:20px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
+              <button onClick="{{ goSettings }}" style="width:36px;height:36px;border-radius:50%;background:{{ currentChildColor }};border:none;color:#fff;font-weight:700;font-size:13.5px;cursor:pointer">{{ currentChild.initial }}</button>
+            </div>
           </div>
           <div style="display:flex;gap:8px;margin-bottom:18px">
             <button onClick="{{ setMetricHeight }}" style="flex:1;padding:10px;border-radius:12px;border:1.5px solid {{ metricHeightBorder }};background:{{ metricHeightBg }};color:{{ metricHeightColor }};font-size:13.5px;font-weight:700;cursor:pointer">Height</button>
@@ -445,12 +685,17 @@
               <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:24px;color:{{ t.text }}">{{ metricValue }}</div>
               <div style="font-size:12.5px;color:#7C9473;font-weight:600">{{ metricPercentile }}</div>
             </div>
+            <div style="position:relative">
             <svg width="100%" height="120" viewBox="0 0 320 120" style="overflow:visible">
               <polyline points="{{ chartPoints }}" fill="none" stroke="#E8785A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
               <sc-for list="{{ chartDots }}" as="d" hint-placeholder-count="6">
-                <circle cx="{{ d.x }}" cy="{{ d.y }}" r="4" fill="#E8785A"></circle>
+                <circle onClick="{{ d.select }}" cx="{{ d.x }}" cy="{{ d.y }}" r="{{ d.r }}" fill="#E8785A" stroke="#fff" stroke-width="{{ d.ring }}" style="cursor:pointer"></circle>
               </sc-for>
             </svg>
+            <sc-if value="{{ chartTooltip.show }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;left:{{ chartTooltip.left }};top:{{ chartTooltip.top }};transform:translate(-50%,-100%);background:#2B2320;color:#fff;font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:8px;white-space:nowrap;pointer-events:none">{{ chartTooltip.label }}: {{ chartTooltip.value }}</div>
+            </sc-if>
+            </div>
             <div style="display:flex;justify-content:space-between;margin-top:4px">
               <sc-for list="{{ chartLabels }}" as="lbl" hint-placeholder-count="6">
                 <div style="font-size:10.5px;color:{{ t.textSecondary }}">{{ lbl.text }}</div>
@@ -461,12 +706,38 @@
           <div style="font-size:13px;font-weight:700;color:{{ t.text }};margin-bottom:10px">Monthly trend</div>
           <div style="display:flex;flex-direction:column;gap:8px">
             <sc-for list="{{ trendRows }}" as="row" hint-placeholder-count="3">
-              <div style="display:flex;justify-content:space-between;align-items:center;background:{{ t.card }};border:1px solid {{ t.border }};border-radius:12px;padding:11px 14px">
+              <div onClick="{{ row.edit }}" style="display:flex;justify-content:space-between;align-items:center;background:{{ t.card }};border:1px solid {{ t.border }};border-radius:12px;padding:11px 14px;cursor:pointer">
                 <div style="font-size:13px;color:{{ t.text }}">{{ row.label }}</div>
-                <div style="font-size:13px;font-weight:600;color:#7C9473">{{ row.change }}</div>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div style="font-size:13px;font-weight:600;color:#7C9473">{{ row.change }}</div>
+                  <svg width="7" height="12" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="{{ t.textSecondary }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </div>
               </div>
             </sc-for>
           </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ ADD/EDIT GROWTH RECORD ============ -->
+      <sc-if value="{{ screenIs.addGrowth }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column;padding:58px 20px 24px;background:{{ t.bg }}">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+            <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">{{ growthFormTitle }}</div>
+          </div>
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Date</div>
+          <input type="date" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:18px;box-sizing:border-box;width:100%" />
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Height (cm)</div>
+          <input value="{{ growthFormHeight }}" onChange="{{ onGrowthHeightChange }}" placeholder="e.g. 74" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:18px;box-sizing:border-box;width:100%" />
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Weight (kg)</div>
+          <input value="{{ growthFormWeight }}" onChange="{{ onGrowthWeightChange }}" placeholder="e.g. 9.1" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:18px;box-sizing:border-box;width:100%" />
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Head circumference (cm)</div>
+          <input placeholder="e.g. 45.5" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:20px;box-sizing:border-box;width:100%" />
+          <sc-if value="{{ growthFormEditing }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ deleteGrowthRecord }}" style="padding:13px;border-radius:12px;border:1px solid rgba(232,120,90,.4);background:none;color:#E8785A;font-size:13.5px;font-weight:700;cursor:pointer;margin-bottom:20px">Delete Record</button>
+          </sc-if>
+          <div style="flex:1"></div>
+          <button onClick="{{ saveGrowthRecord }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">{{ growthFormSaveLabel }}</button>
         </div>
       </sc-if>
 
@@ -474,7 +745,7 @@
       <sc-if value="{{ screenIs.health }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;overflow:auto;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:20px;color:{{ t.text }}">Health</div>
           </div>
           <div style="display:flex;gap:6px;background:{{ t.card }};border:1px solid {{ t.border }};padding:4px;border-radius:12px;margin-bottom:18px">
@@ -537,7 +808,11 @@
 
       <!-- ============ ALBUM ============ -->
       <sc-if value="{{ screenIs.album }}" hint-placeholder-val="{{ false }}">
-        <div style="flex:1;overflow:auto;padding:58px 20px 90px;background:{{ t.bg }}">
+        <div onTouchStart="{{ pull.onStart }}" onTouchMove="{{ pull.onMove }}" onTouchEnd="{{ pull.onEnd }}" style="flex:1;overflow:auto;padding:58px 20px 90px;background:{{ t.bg }}">
+          <div style="height:{{ pull.height }}px;overflow:hidden;transition:{{ pull.transition }};display:flex;align-items:center;justify-content:center;gap:8px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="{{ pull.iconStyle }}"><path d="M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3" stroke="#E8785A" stroke-width="2" stroke-linecap="round"></path></svg>
+            <div style="font-size:12px;color:{{ t.textSecondary }}">{{ pull.label }}</div>
+          </div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:22px;color:{{ t.text }}">Album</div>
             <button onClick="{{ goSettings }}" style="width:36px;height:36px;border-radius:50%;background:{{ currentChildColor }};border:none;color:#fff;font-weight:700;font-size:13.5px;cursor:pointer">{{ currentChild.initial }}</button>
@@ -549,42 +824,169 @@
           <sc-if value="{{ albumViewIs.year }}" hint-placeholder-val="{{ false }}">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
               <sc-for list="{{ albumMonths }}" as="m" hint-placeholder-count="6">
-                <div onClick="{{ m.open }}" style="border-radius:16px;overflow:hidden;cursor:pointer">
-                  <div style="height:110px;background:{{ m.color }};display:flex;align-items:flex-end;padding:10px">
+                <div onClick="{{ m.open }}" style="border-radius:16px;background:{{ t.card }};border:1px solid {{ t.border }};overflow:hidden;cursor:pointer;display:flex;flex-direction:column">
+                  <div style="height:110px;background:{{ m.color }};display:flex;align-items:flex-end;padding:10px;flex:none">
                     <div style="color:#fff;font-size:12px;font-weight:600;background:rgba(0,0,0,.25);padding:3px 8px;border-radius:99px">{{ m.count }} photos</div>
                   </div>
-                  <div style="padding:8px 2px;font-size:13px;font-weight:600;color:{{ t.text }}">{{ m.label }}</div>
+                  <div style="padding:10px 12px;font-size:13px;font-weight:600;color:{{ t.text }}">{{ m.label }}</div>
                 </div>
               </sc-for>
             </div>
           </sc-if>
           <sc-if value="{{ albumViewIs.month }}" hint-placeholder-val="{{ false }}">
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-              <sc-for list="{{ albumPhotos }}" as="p" hint-placeholder-count="12">
-                <div onClick="{{ p.open }}" style="aspect-ratio:1;border-radius:12px;background:{{ p.color }};cursor:pointer"></div>
-              </sc-for>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+              <div style="font-size:13.5px;font-weight:600;color:{{ t.text }}">Aug 2026 · 24 photos</div>
+              <div style="display:flex;gap:4px;background:{{ t.card }};border:1px solid {{ t.border }};border-radius:10px;padding:3px">
+                <button onClick="{{ setPhotoGridView }}" style="width:30px;height:26px;border:none;border-radius:7px;background:{{ photoGridBg }};color:{{ photoGridColor }};cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"></rect><rect x="13" y="3" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"></rect><rect x="3" y="13" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"></rect><rect x="13" y="13" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"></rect></svg></button>
+                <button onClick="{{ setPhotoListView }}" style="width:30px;height:26px;border:none;border-radius:7px;background:{{ photoListBg }};color:{{ photoListColor }};cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.8"></rect><rect x="3" y="10.5" width="18" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.8"></rect><rect x="3" y="17" width="18" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.8"></rect></svg></button>
+              </div>
             </div>
+            <sc-if value="{{ albumPhotosEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:50px 20px">
+                <div style="width:72px;height:72px;border-radius:50%;background:{{ t.accentSoft }};display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="#E8785A" stroke-width="1.7"></rect><circle cx="9" cy="10" r="1.8" fill="#E8785A"></circle><path d="M3 17l5-5 4 4 3-3 5 5" stroke="#E8785A" stroke-width="1.7" stroke-linejoin="round"></path></svg>
+                </div>
+                <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:16px;color:{{ t.text }};margin-bottom:6px">No photos yet</div>
+                <div style="font-size:13px;color:{{ t.textSecondary }};line-height:1.5">Photos added to notes will show up here.</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ photoViewIs.grid }}" hint-placeholder-val="{{ false }}">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+                <sc-for list="{{ albumPhotos }}" as="p" hint-placeholder-count="12">
+                  <div onClick="{{ p.open }}" style="aspect-ratio:1;border-radius:12px;background:{{ p.color }};cursor:pointer"></div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ photoViewIs.list }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ albumPhotos }}" as="p" hint-placeholder-count="12">
+                  <div onClick="{{ p.open }}" style="display:flex;align-items:center;gap:12px;background:{{ t.card }};border:1px solid {{ t.border }};border-radius:14px;padding:8px;cursor:pointer">
+                    <div style="width:52px;height:52px;border-radius:10px;background:{{ p.color }};flex:none"></div>
+                    <div style="flex:1"><div style="font-size:13px;font-weight:600;color:{{ t.text }}">{{ p.name }}</div><div style="font-size:11.5px;color:{{ t.textSecondary }}">{{ p.date }}</div></div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <button onClick="{{ goCreateAlbum }}" style="width:100%;margin-top:14px;padding:14px;border-radius:14px;border:1.5px dashed #E8785A;background:{{ t.accentSoft }};color:#E8785A;font-size:13.5px;font-weight:700;cursor:pointer">+ New Album</button>
           </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- ============ CREATE ALBUM ============ -->
+      <sc-if value="{{ screenIs.createAlbum }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column;padding:58px 20px 24px;background:{{ t.bg }}">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="{{ t.text }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+            <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">New Album</div>
+          </div>
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Album name</div>
+          <input placeholder="e.g. Summer trip" style="width:100%;padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:20px;box-sizing:border-box" />
+          <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px">Add photos</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px">
+            <button style="aspect-ratio:1;border-radius:12px;border:1.5px dashed {{ t.border }};background:{{ t.card }};color:{{ t.textSecondary }};font-size:24px;cursor:pointer">+</button>
+            <sc-for list="{{ createAlbumPhotos }}" as="p" hint-placeholder-count="2">
+              <div style="aspect-ratio:1;border-radius:12px;background:{{ p.color }};position:relative">
+                <div onClick="{{ p.remove }}" style="position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,.45);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer">✕</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="flex:1"></div>
+          <button onClick="{{ saveCreateAlbum }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Create Album</button>
         </div>
       </sc-if>
 
       <!-- ============ PHOTO PREVIEW ============ -->
       <sc-if value="{{ previewOpen }}" hint-placeholder-val="{{ false }}">
-        <div onTouchStart="{{ onTouchStart }}" onTouchMove="{{ onTouchMove }}" onTouchEnd="{{ onTouchEnd }}" style="position:absolute;inset:0;background:#000;z-index:80;display:flex;flex-direction:column">
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:58px 18px 12px">
+        <div style="position:absolute;inset:0;background:{{ previewBackdrop }};z-index:80;display:flex;flex-direction:column;transform:{{ previewTransform }};transition:{{ previewSpringTransition }}">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:58px 18px 12px;opacity:{{ chromeOpacity }};transition:opacity .2s">
             <div style="color:rgba(255,255,255,.7);font-size:12.5px;font-weight:600">{{ previewCounter }}</div>
             <button onClick="{{ closePreview }}" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:15px;cursor:pointer">✕</button>
           </div>
-          <div style="flex:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
-            <div style="width:82%;aspect-ratio:1;border-radius:20px;background:{{ previewColor }};box-shadow:0 20px 50px rgba(0,0,0,.4)"></div>
-            <button onClick="{{ prevPhoto }}" style="position:absolute;left:10px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:16px;cursor:pointer">‹</button>
-            <button onClick="{{ nextPhoto }}" style="position:absolute;right:10px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:16px;cursor:pointer">›</button>
+          <div onTouchStart="{{ onTouchStart }}" onTouchMove="{{ onTouchMove }}" onTouchEnd="{{ onTouchEnd }}" style="flex:1;position:relative;overflow:hidden;touch-action:none">
+            <div style="position:absolute;inset:0;display:flex;width:300%;left:-100%;transform:translateX(calc({{ trackShift }}% + {{ dragXPx }}px));transition:{{ dragTransition }}">
+              <div style="flex:0 0 33.3333%;display:flex;align-items:center;justify-content:center;padding:0 24px"><div style="width:100%;max-width:280px;aspect-ratio:1;border-radius:20px;background:{{ prevColor }};box-shadow:0 20px 50px rgba(0,0,0,.4)"></div></div>
+              <div onClick="{{ toggleChrome }}" style="flex:0 0 33.3333%;display:flex;align-items:center;justify-content:center;padding:0 24px;cursor:pointer"><div style="width:100%;max-width:280px;aspect-ratio:1;border-radius:20px;background:{{ previewColor }};box-shadow:0 20px 50px rgba(0,0,0,.4)"></div></div>
+              <div style="flex:0 0 33.3333%;display:flex;align-items:center;justify-content:center;padding:0 24px"><div style="width:100%;max-width:280px;aspect-ratio:1;border-radius:20px;background:{{ nextColor }};box-shadow:0 20px 50px rgba(0,0,0,.4)"></div></div>
+            </div>
           </div>
-          <div style="display:flex;justify-content:center;gap:6px;padding:16px 0 34px">
+          <div style="display:flex;justify-content:center;gap:24px;padding:6px 0;opacity:{{ chromeOpacity }};transition:opacity .2s">
+            <button onClick="{{ goEditPhoto }}" style="background:none;border:none;color:#fff;font-size:12.5px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 20h4l10.5-10.5a2 2 0 000-2.8l-1.2-1.2a2 2 0 00-2.8 0L4 16v4z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"></path></svg>Edit</button>
+            <button onClick="{{ openDeletePhotoConfirm }}" style="background:none;border:none;color:#fff;font-size:12.5px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V4.5a1 1 0 011-1h4a1 1 0 011 1V7m-8 0l1 13a1 1 0 001 1h6a1 1 0 001-1l1-13" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Delete</button>
+          </div>
+          <div style="display:flex;justify-content:center;gap:6px;padding:16px 0 34px;opacity:{{ chromeOpacity }};transition:opacity .2s">
             <sc-for list="{{ previewDots }}" as="d" hint-placeholder-count="12">
-              <div style="width:{{ d.size }};height:6px;border-radius:99px;background:{{ d.color }}"></div>
+              <div style="width:{{ d.size }};height:6px;border-radius:99px;background:{{ d.color }};transition:width .2s"></div>
             </sc-for>
           </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ TOAST ============ -->
+      <sc-if value="{{ toast.show }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:20px;right:20px;bottom:{{ toastBottom }};z-index:95;display:flex;align-items:center;gap:10px;background:#2B2320;color:#fff;padding:13px 16px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.3);animation:kn-toast-in .25s ease both">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#7C9473"></circle><path d="M8 12.5l2.5 2.5L16 9" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <div style="font-size:13.5px;font-weight:600">{{ toast.message }}</div>
+        </div>
+      </sc-if>
+
+      <!-- ============ PUSH NOTIFICATION ============ -->
+      <sc-if value="{{ pushNotif.show }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;top:14px;left:10px;right:10px;z-index:96;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-radius:18px;padding:12px 14px;box-shadow:0 12px 30px rgba(0,0,0,.25);display:flex;gap:10px;align-items:flex-start;animation:kn-notif-in .35s cubic-bezier(.2,.9,.3,1.3) both">
+          <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(145deg,#F0B860,#E8785A);flex:none;display:flex;align-items:center;justify-content:center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3c-3 2-6 2-6 2v6c0 4.5 2.6 7.3 6 8.5 3.4-1.2 6-4 6-8.5V5s-3 0-6-2z" fill="#fff" fill-opacity=".9"></path></svg>
+          </div>
+          <div style="flex:1">
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font-size:12.5px;font-weight:700;color:#1a1a1a">{{ pushNotif.title }}</div><div style="font-size:10.5px;color:rgba(0,0,0,.4)">now</div></div>
+            <div style="font-size:12px;color:rgba(0,0,0,.75);line-height:1.4;margin-top:2px">{{ pushNotif.body }}</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ CONFIRM DIALOG ============ -->
+      <sc-if value="{{ confirmDialog.show }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,.4);z-index:97;display:flex;align-items:center;justify-content:center;padding:32px;animation:kn-fade .15s ease both">
+          <div style="background:{{ t.card }};border-radius:20px;padding:22px 20px;width:100%;max-width:290px;box-shadow:0 20px 50px rgba(0,0,0,.3)">
+            <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:17px;color:{{ t.text }};margin-bottom:8px;text-align:center">{{ confirmDialog.title }}</div>
+            <div style="font-size:13.5px;color:{{ t.textSecondary }};line-height:1.5;text-align:center;margin-bottom:20px">{{ confirmDialog.message }}</div>
+            <div style="display:flex;gap:10px">
+              <button onClick="{{ closeConfirm }}" style="flex:1;padding:12px;border-radius:12px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:13.5px;font-weight:600;cursor:pointer">Cancel</button>
+              <button onClick="{{ confirmYes }}" style="flex:1;padding:12px;border-radius:12px;border:none;background:#E8785A;color:#fff;font-size:13.5px;font-weight:700;cursor:pointer">{{ confirmDialog.confirmLabel }}</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ TIME PICKER SHEET ============ -->
+      <sc-if value="{{ timeSheet.show }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeTimeSheet }}" style="position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:98;animation:kn-fade .15s ease both"></div>
+        <div style="position:absolute;left:0;right:0;bottom:0;z-index:99;background:{{ t.card }};border-radius:24px 24px 0 0;padding:12px 22px 30px;box-shadow:0 -12px 34px rgba(0,0,0,.22);animation:kn-sheet-up .28s cubic-bezier(.22,1,.36,1) both">
+          <div style="width:36px;height:4px;border-radius:99px;background:{{ t.border }};margin:0 auto 18px"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+            <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:16px;color:{{ t.text }}">{{ timeSheet.title }}</div>
+            <button onClick="{{ closeTimeSheet }}" style="width:28px;height:28px;border-radius:50%;border:none;background:{{ t.accentSoft }};color:{{ t.textSecondary }};font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+          </div>
+          <div style="text-align:center;font-family:'Fredoka',sans-serif;font-weight:700;font-size:34px;color:#E8785A;margin:8px 0 18px">{{ timeSheet.preview }}</div>
+          <div style="display:flex;justify-content:center;align-items:center;gap:2px;position:relative;margin-bottom:22px">
+            <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px;background:{{ t.accentSoft }};border-radius:14px;z-index:0;pointer-events:none"></div>
+            <div style="position:absolute;left:0;right:0;top:0;height:53px;background:linear-gradient(180deg,{{ t.card }},transparent);z-index:2;pointer-events:none"></div>
+            <div style="position:absolute;left:0;right:0;bottom:0;height:53px;background:linear-gradient(0deg,{{ t.card }},transparent);z-index:2;pointer-events:none"></div>
+            <div onScroll="{{ timeSheet.onHourScroll }}" style="height:150px;overflow-y:auto;scroll-snap-type:y mandatory;width:70px;z-index:1" id="kn-hour-col">
+              <div style="height:53px"></div>
+              <sc-for list="{{ timeSheet.hours }}" as="h" hint-placeholder-count="12">
+                <div onClick="{{ h.select }}" style="height:44px;display:flex;align-items:center;justify-content:center;font-size:{{ h.size }};font-weight:{{ h.weight }};color:{{ h.color }};font-family:'Fredoka',sans-serif;scroll-snap-align:center;cursor:pointer;transition:color .15s">{{ h.label }}</div>
+              </sc-for>
+              <div style="height:53px"></div>
+            </div>
+            <div style="font-size:22px;font-weight:700;color:{{ t.text }};z-index:1;margin:0 2px">:</div>
+            <div onScroll="{{ timeSheet.onMinuteScroll }}" style="height:150px;overflow-y:auto;scroll-snap-type:y mandatory;width:70px;z-index:1" id="kn-min-col">
+              <div style="height:53px"></div>
+              <sc-for list="{{ timeSheet.minutes }}" as="m" hint-placeholder-count="12">
+                <div onClick="{{ m.select }}" style="height:44px;display:flex;align-items:center;justify-content:center;font-size:{{ m.size }};font-weight:{{ m.weight }};color:{{ m.color }};font-family:'Fredoka',sans-serif;scroll-snap-align:center;cursor:pointer;transition:color .15s">{{ m.label }}</div>
+              </sc-for>
+              <div style="height:53px"></div>
+            </div>
+          </div>
+          <button onClick="{{ confirmTimeSheet }}" style="width:100%;padding:16px;border-radius:14px;border:none;background:#E8785A;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Set Time</button>
         </div>
       </sc-if>
 
@@ -596,11 +998,20 @@
             <button onClick="{{ goSettings }}" style="width:36px;height:36px;border-radius:50%;background:{{ currentChildColor }};border:none;color:#fff;font-weight:700;font-size:13.5px;cursor:pointer">{{ currentChild.initial }}</button>
           </div>
           <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
-            <div style="align-self:flex-start;max-width:85%;background:{{ t.card }};border:1px solid {{ t.border }};border-radius:16px 16px 16px 4px;padding:12px 14px;font-size:13.5px;color:{{ t.text }};line-height:1.5">Hi! Ask me anything about {{ currentChild.name }}'s growth, sleep, or milestones.</div>
+            <sc-for list="{{ aiMessages }}" as="msg" hint-placeholder-count="1">
+              <div style="align-self:{{ msg.align }};max-width:85%;background:{{ msg.bg }};border:{{ msg.border }};border-radius:{{ msg.radius }};padding:12px 14px;font-size:13.5px;color:{{ msg.color }};line-height:1.5">{{ msg.text }}</div>
+            </sc-for>
+            <sc-if value="{{ aiThinking }}" hint-placeholder-val="{{ false }}">
+              <div style="align-self:flex-start;background:{{ t.card }};border:1px solid {{ t.border }};border-radius:16px 16px 16px 4px;padding:12px 16px;display:flex;gap:4px">
+                <div style="width:6px;height:6px;border-radius:50%;background:{{ t.textSecondary }};animation:kn-dot-bounce 1s ease-in-out infinite"></div>
+                <div style="width:6px;height:6px;border-radius:50%;background:{{ t.textSecondary }};animation:kn-dot-bounce 1s ease-in-out .15s infinite"></div>
+                <div style="width:6px;height:6px;border-radius:50%;background:{{ t.textSecondary }};animation:kn-dot-bounce 1s ease-in-out .3s infinite"></div>
+              </div>
+            </sc-if>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px">
             <sc-for list="{{ aiSuggestions }}" as="s" hint-placeholder-count="3">
-              <button style="padding:9px 14px;border-radius:99px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:12.5px;font-weight:600;cursor:pointer">{{ s.label }}</button>
+              <button onClick="{{ s.ask }}" style="padding:9px 14px;border-radius:99px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:12.5px;font-weight:600;cursor:pointer">{{ s.label }}</button>
             </sc-for>
           </div>
           <div style="display:flex;flex-direction:column;gap:12px">
@@ -620,7 +1031,12 @@
               <button onClick="{{ goMilestoneGenerator }}" style="background:{{ t.accentSoft }};border:none;border-radius:10px;padding:8px 14px;color:#E8785A;font-size:12.5px;font-weight:700;cursor:pointer">Open</button>
             </div>
           </div>
-          <input placeholder="Ask a question…" style="width:100%;margin-top:18px;padding:14px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:13.5px">
+          <div style="display:flex;gap:8px;margin-top:18px">
+            <input value="{{ aiInput }}" onChange="{{ onAiInputChange }}" onKeyDown="{{ onAiInputKeyDown }}" placeholder="Ask a question…" style="flex:1;padding:14px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:13.5px">
+            <button onClick="{{ sendAiMessage }}" style="width:48px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 20l16-8L4 4v6l10 2-10 2v6z" fill="#fff"></path></svg>
+            </button>
+          </div>
         </div>
       </sc-if>
 
@@ -628,29 +1044,69 @@
       <sc-if value="{{ screenIs.settings }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;overflow:auto;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:20px;color:{{ t.text }}">Settings</div>
           </div>
-          <div onClick="{{ goEditProfile }}" style="display:flex;align-items:center;gap:14px;background:{{ t.card }};border:1px solid {{ t.border }};border-radius:16px;padding:14px;margin-bottom:20px;cursor:pointer">
+          <div onClick="{{ goEditProfile }}" style="display:flex;align-items:center;gap:14px;background:{{ t.card }};border:1px solid {{ t.border }};border-radius:16px;padding:14px;margin-bottom:22px;cursor:pointer">
             <div style="width:48px;height:48px;border-radius:50%;background:#E8785A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-family:'Fredoka',sans-serif">JP</div>
             <div style="flex:1"><div style="font-size:14.5px;font-weight:600;color:{{ t.text }}">Jamie Park</div><div style="font-size:12.5px;color:{{ t.textSecondary }}">jamie@family.com</div></div>
-            <div style="font-size:13px;color:{{ t.textSecondary }}">›</div>
+            <svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="{{ t.textSecondary }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
           </div>
-          <div style="display:flex;flex-direction:column;border-radius:16px;overflow:hidden;border:1px solid {{ t.border }};margin-bottom:16px">
-            <div onClick="{{ goFamilyMembers }}" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:{{ t.card }};border-bottom:1px solid {{ t.border }};cursor:pointer"><div style="font-size:14px;color:{{ t.text }}">Family members</div><div style="font-size:13px;color:{{ t.textSecondary }}">›</div></div>
-            <div onClick="{{ goNotifications }}" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:{{ t.card }};border-bottom:1px solid {{ t.border }};cursor:pointer"><div style="font-size:14px;color:{{ t.text }}">Notifications</div><div style="font-size:13px;color:{{ t.textSecondary }}">›</div></div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:{{ t.card }};border-bottom:1px solid {{ t.border }}">
-              <div style="font-size:14px;color:{{ t.text }}">Dark mode</div>
+
+          <div style="font-size:11px;font-weight:700;color:{{ t.textSecondary }};text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;padding-left:2px">Account</div>
+          <div style="display:flex;flex-direction:column;border-radius:16px;overflow:hidden;border:1px solid {{ t.border }};margin-bottom:18px">
+            <div onClick="{{ goFamilyMembers }}" style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:{{ t.card }};border-bottom:1px solid {{ t.border }};cursor:pointer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.2" stroke="#E8785A" stroke-width="1.7"></circle><path d="M3.5 19c1-3.3 3-5 5.5-5s4.5 1.7 5.5 5" stroke="#E8785A" stroke-width="1.7" stroke-linecap="round"></path><circle cx="17" cy="8.5" r="2.4" stroke="#E8785A" stroke-width="1.7"></circle><path d="M15.5 13.2c2.2.3 3.6 1.8 4.5 4.8" stroke="#E8785A" stroke-width="1.7" stroke-linecap="round"></path></svg>
+              <div style="flex:1;font-size:14px;color:{{ t.text }}">Family members</div>
+              <svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="{{ t.textSecondary }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+            <div onClick="{{ goNotifications }}" style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:{{ t.card }};cursor:pointer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3.5c-3 0-4.5 2.2-4.5 5v3.2L6 15h12l-1.5-3.3V8.5c0-2.8-1.5-5-4.5-5z" stroke="#E8785A" stroke-width="1.7" stroke-linejoin="round"></path><path d="M10 18a2 2 0 004 0" stroke="#E8785A" stroke-width="1.7" stroke-linecap="round"></path></svg>
+              <div style="flex:1;font-size:14px;color:{{ t.text }}">Notifications</div>
+              <svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="{{ t.textSecondary }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+          </div>
+
+          <div style="font-size:11px;font-weight:700;color:{{ t.textSecondary }};text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;padding-left:2px">Preferences</div>
+          <div style="display:flex;flex-direction:column;border-radius:16px;overflow:hidden;border:1px solid {{ t.border }};margin-bottom:18px">
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:{{ t.card }}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 109 9c0-.3 0-.6-.05-.9A5.5 5.5 0 0112.9 3.05 9 9 0 0012 3z" stroke="#E8785A" stroke-width="1.7" stroke-linejoin="round"></path></svg>
+              <div style="flex:1;font-size:14px;color:{{ t.text }}">Dark mode</div>
               <button onClick="{{ toggleTheme }}" style="width:44px;height:26px;border-radius:99px;border:none;background:{{ darkToggleBg }};position:relative;cursor:pointer">
                 <div style="position:absolute;top:3px;left:{{ darkToggleLeft }};width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s"></div>
               </button>
             </div>
-            <div onClick="{{ goSubscription }}" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:{{ t.card }};border-bottom:1px solid {{ t.border }};cursor:pointer"><div style="font-size:14px;color:{{ t.text }}">Subscription</div><div style="font-size:13px;color:{{ t.textSecondary }}">›</div></div>
-            <div onClick="{{ goBilling }}" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:{{ t.card }};border-bottom:1px solid {{ t.border }};cursor:pointer"><div style="font-size:14px;color:{{ t.text }}">Billing</div><div style="font-size:13px;color:{{ t.textSecondary }}">›</div></div>
-            <div onClick="{{ goStorage }}" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:{{ t.card }};border-bottom:1px solid {{ t.border }};cursor:pointer"><div style="font-size:14px;color:{{ t.text }}">Storage</div><div style="font-size:13px;color:{{ t.textSecondary }}">›</div></div>
-            <div onClick="{{ goAbout }}" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:{{ t.card }};cursor:pointer"><div style="font-size:14px;color:{{ t.text }}">About</div><div style="font-size:13px;color:{{ t.textSecondary }}">›</div></div>
           </div>
-          <div style="text-align:center;font-size:13.5px;font-weight:600;color:#E8785A;cursor:pointer">Log out</div>
+
+          <div style="font-size:11px;font-weight:700;color:{{ t.textSecondary }};text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;padding-left:2px">Billing</div>
+          <div style="display:flex;flex-direction:column;border-radius:16px;overflow:hidden;border:1px solid {{ t.border }};margin-bottom:18px">
+            <div onClick="{{ goSubscription }}" style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:{{ t.card }};border-bottom:1px solid {{ t.border }};cursor:pointer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z" stroke="#E8785A" stroke-width="1.7" stroke-linejoin="round"></path></svg>
+              <div style="flex:1;font-size:14px;color:{{ t.text }}">Subscription</div>
+              <svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="{{ t.textSecondary }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+            <div onClick="{{ goBilling }}" style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:{{ t.card }};border-bottom:1px solid {{ t.border }};cursor:pointer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="#E8785A" stroke-width="1.7"></rect><path d="M3 9.5h18" stroke="#E8785A" stroke-width="1.7"></path></svg>
+              <div style="flex:1;font-size:14px;color:{{ t.text }}">Billing</div>
+              <svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="{{ t.textSecondary }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+            <div onClick="{{ goStorage }}" style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:{{ t.card }};cursor:pointer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 8l1.5-3.5A1.5 1.5 0 017 3.5h10a1.5 1.5 0 011.5 1L20 8" stroke="#E8785A" stroke-width="1.7" stroke-linejoin="round"></path><rect x="4" y="8" width="16" height="12" rx="1.5" stroke="#E8785A" stroke-width="1.7"></rect></svg>
+              <div style="flex:1;font-size:14px;color:{{ t.text }}">Storage</div>
+              <svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="{{ t.textSecondary }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+          </div>
+
+          <div style="font-size:11px;font-weight:700;color:{{ t.textSecondary }};text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;padding-left:2px">Support</div>
+          <div style="display:flex;flex-direction:column;border-radius:16px;overflow:hidden;border:1px solid {{ t.border }};margin-bottom:24px">
+            <div onClick="{{ goAbout }}" style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:{{ t.card }};cursor:pointer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#E8785A" stroke-width="1.7"></circle><path d="M12 11v5.5M12 7.8v.2" stroke="#E8785A" stroke-width="1.9" stroke-linecap="round"></path></svg>
+              <div style="flex:1;font-size:14px;color:{{ t.text }}">About</div>
+              <svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="{{ t.textSecondary }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+          </div>
+
+          <button onClick="{{ openLogoutConfirm }}" style="width:100%;padding:15px;border-radius:14px;border:1.5px solid rgba(232,120,90,.35);background:none;color:#E8785A;font-size:14.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Log Out</button>
         </div>
       </sc-if>
 
@@ -658,12 +1114,14 @@
       <sc-if value="{{ screenIs.editProfile }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;overflow:auto;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:20px;color:{{ t.text }}">Edit Profile</div>
           </div>
           <div style="display:flex;justify-content:center;margin-bottom:24px">
             <div style="width:88px;height:88px;border-radius:50%;background:#E8785A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:26px;font-family:'Fredoka',sans-serif;position:relative">JP
-              <div style="position:absolute;bottom:-2px;right:-2px;width:28px;height:28px;border-radius:50%;background:{{ t.card }};border:1px solid {{ t.border }};display:flex;align-items:center;justify-content:center;font-size:12px">✎</div>
+              <button onClick="{{ uploadAvatar }}" style="position:absolute;bottom:-2px;right:-2px;width:30px;height:30px;border-radius:50%;background:{{ t.card }};border:none;box-shadow:0 1px 2px rgba(0,0,0,.08),0 3px 8px rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;cursor:pointer">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 8.5A1.5 1.5 0 015.5 7h2l1-2h7l1 2h2A1.5 1.5 0 0120 8.5V18a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 18V8.5z" stroke="#E8785A" stroke-width="1.7" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.2" stroke="#E8785A" stroke-width="1.7"></circle></svg>
+              </button>
             </div>
           </div>
           <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Name</div>
@@ -673,7 +1131,7 @@
           <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Relationship</div>
           <input value="Parent" style="padding: 15px 16px; border-radius: 14px; border: 1px solid {{ t.border }}; background: {{ t.card }}; color: {{ t.text }}; font-size: 14.5px; margin-bottom: 26px; width: 100%">
           <div style="flex:1"></div>
-          <button onClick="{{ back }}" style="padding: 16px; border: none; border-radius: 14px; background: #E8785A; color: #fff; font-size: 15.5px; font-weight: 700; cursor: pointer; font-family: 'Fredoka',sans-serif; width: 100%">Save Changes</button>
+          <button onClick="{{ saveEditProfile }}" style="padding: 16px; border: none; border-radius: 14px; background: #E8785A; color: #fff; font-size: 15.5px; font-weight: 700; cursor: pointer; font-family: 'Fredoka',sans-serif; width: 100%">Save Changes</button>
         </div>
       </sc-if>
 
@@ -681,7 +1139,7 @@
       <sc-if value="{{ screenIs.familyMembers }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;overflow:auto;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:20px;color:{{ t.text }}">Family Members</div>
           </div>
           <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
@@ -701,7 +1159,7 @@
       <sc-if value="{{ screenIs.notifications }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;overflow:auto;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:20px;color:{{ t.text }}">Notifications</div>
           </div>
           <div style="display:flex;flex-direction:column;border-radius:16px;overflow:hidden;border:1px solid {{ t.border }}">
@@ -713,6 +1171,7 @@
                 </button>
               </div>
             </sc-for>
+          <button onClick="{{ sendTestNotification }}" style="width:100%;margin-top:16px;padding:14px;border-radius:12px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:13px;font-weight:600;cursor:pointer">Send Test Notification</button>
           </div>
         </div>
       </sc-if>
@@ -721,17 +1180,23 @@
       <sc-if value="{{ screenIs.addSleep }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;display:flex;flex-direction:column;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">Add Sleep Record</div>
           </div>
           <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Start time</div>
-          <input type="time" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:18px" />
+          <button onClick="{{ openStartTimePicker }}" style="width:100%;text-align:left;padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:18px;cursor:pointer;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between">
+            <span>{{ sleepStartLabel }}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="{{ t.textSecondary }}" stroke-width="1.7"></circle><path d="M12 7v5l3.5 2" stroke="{{ t.textSecondary }}" stroke-width="1.7" stroke-linecap="round"></path></svg>
+          </button>
           <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">End time</div>
-          <input type="time" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:18px" />
+          <button onClick="{{ openEndTimePicker }}" style="width:100%;text-align:left;padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:18px;cursor:pointer;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between">
+            <span>{{ sleepEndLabel }}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="{{ t.textSecondary }}" stroke-width="1.7"></circle><path d="M12 7v5l3.5 2" stroke="{{ t.textSecondary }}" stroke-width="1.7" stroke-linecap="round"></path></svg>
+          </button>
           <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Notes</div>
           <textarea placeholder="Optional notes" style="height:80px;padding:14px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14px;resize:none;margin-bottom:20px"></textarea>
           <div style="flex:1"></div>
-          <button onClick="{{ back }}" style="padding:16px;border:none;border-radius:14px;background:#6B87BE;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Save Record</button>
+          <button onClick="{{ saveAddSleep }}" style="padding:16px;border:none;border-radius:14px;background:#6B87BE;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Save Record</button>
         </div>
       </sc-if>
 
@@ -739,18 +1204,49 @@
       <sc-if value="{{ screenIs.sleepAnalytics }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;overflow:auto;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">Sleep Analytics</div>
           </div>
-          <div style="background:{{ t.card }};border:1px solid {{ t.border }};border-radius:18px;padding:16px;display:flex;align-items:flex-end;gap:8px;height:150px;margin-bottom:16px">
-            <sc-for list="{{ sleepBars }}" as="b" hint-placeholder-count="7">
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;justify-content:flex-end;height:100%">
-                <div style="width:100%;border-radius:6px;background:#6B87BE;height:{{ b.height }}"></div>
-                <div style="font-size:10px;color:{{ t.textSecondary }}">{{ b.label }}</div>
+          <div style="background:linear-gradient(135deg,#8FA8D6,#6B87BE);border-radius:20px;padding:18px;color:#fff;margin-bottom:16px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+              <div>
+                <div style="font-size:12px;opacity:.85;margin-bottom:4px">This week</div>
+                <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:24px">11h 15m <span style="font-size:14px;font-weight:600;opacity:.85">avg/day</span></div>
               </div>
-            </sc-for>
+              <div style="background:rgba(255,255,255,.22);border-radius:99px;padding:5px 11px;font-size:11.5px;font-weight:700">Well rested</div>
+            </div>
+            <div style="display:flex;gap:20px">
+              <div><div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:16px">7h 40m</div><div style="font-size:11px;opacity:.85">Night sleep</div></div>
+              <div><div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:16px">3h 35m</div><div style="font-size:11px;opacity:.85">Naps</div></div>
+              <div><div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:16px">8:12 PM</div><div style="font-size:11px;opacity:.85">Avg bedtime</div></div>
+            </div>
           </div>
-          <div style="font-size:13px;color:{{ t.textSecondary }};line-height:1.5">Average sleep this week: 11h 15m per day, including naps.</div>
+
+          <div style="background:{{ t.card }};border:1px solid {{ t.border }};border-radius:18px;padding:16px;margin-bottom:16px">
+            <div style="font-size:13px;font-weight:700;color:{{ t.text }};margin-bottom:14px">Sleep hours per day</div>
+            <div style="display:flex;align-items:flex-end;gap:8px;height:130px">
+              <sc-for list="{{ sleepBars }}" as="b" hint-placeholder-count="7">
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;justify-content:flex-end;height:100%">
+                  <div style="width:100%;border-radius:6px 6px 3px 3px;background:linear-gradient(180deg,#8FA8D6,#6B87BE);height:{{ b.height }}"></div>
+                  <div style="font-size:10px;color:{{ t.textSecondary }}">{{ b.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="font-size:13px;font-weight:700;color:{{ t.text }};margin-bottom:10px">Breakdown</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:12px;background:{{ t.card }};border:1px solid {{ t.border }};border-radius:12px;padding:11px 14px">
+              <div style="width:8px;height:8px;border-radius:50%;background:#6B87BE"></div>
+              <div style="flex:1;font-size:13px;color:{{ t.text }}">Night sleep</div>
+              <div style="font-size:13px;font-weight:600;color:{{ t.textSecondary }}">68%</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;background:{{ t.card }};border:1px solid {{ t.border }};border-radius:12px;padding:11px 14px">
+              <div style="width:8px;height:8px;border-radius:50%;background:#8FA8D6"></div>
+              <div style="flex:1;font-size:13px;color:{{ t.text }}">Naps</div>
+              <div style="font-size:13px;font-weight:600;color:{{ t.textSecondary }}">32%</div>
+            </div>
+          </div>
         </div>
       </sc-if>
 
@@ -758,7 +1254,7 @@
       <sc-if value="{{ screenIs.addFeeding }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;display:flex;flex-direction:column;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">Add Feeding Record</div>
           </div>
           <div style="display:flex;gap:8px;margin-bottom:18px">
@@ -769,9 +1265,12 @@
           <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Amount / notes</div>
           <input placeholder="e.g. 180ml or mashed banana" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:18px" />
           <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Time</div>
-          <input type="time" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:20px" />
+          <button onClick="{{ openFeedingTimePicker }}" style="width:100%;text-align:left;padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:20px;cursor:pointer;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between">
+            <span>{{ feedingTimeLabel }}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="{{ t.textSecondary }}" stroke-width="1.7"></circle><path d="M12 7v5l3.5 2" stroke="{{ t.textSecondary }}" stroke-width="1.7" stroke-linecap="round"></path></svg>
+          </button>
           <div style="flex:1"></div>
-          <button onClick="{{ back }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Save Record</button>
+          <button onClick="{{ saveAddFeeding }}" style="padding:16px;border:none;border-radius:14px;background:#E8785A;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Save Record</button>
         </div>
       </sc-if>
 
@@ -779,18 +1278,54 @@
       <sc-if value="{{ screenIs.feedingAnalytics }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;overflow:auto;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">Feeding Analytics</div>
           </div>
-          <div style="background:{{ t.card }};border:1px solid {{ t.border }};border-radius:18px;padding:16px;display:flex;align-items:flex-end;gap:8px;height:150px;margin-bottom:16px">
-            <sc-for list="{{ feedBars }}" as="b" hint-placeholder-count="7">
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;justify-content:flex-end;height:100%">
-                <div style="width:100%;border-radius:6px;background:#E8785A;height:{{ b.height }}"></div>
-                <div style="font-size:10px;color:{{ t.textSecondary }}">{{ b.label }}</div>
+          <div style="background:linear-gradient(135deg,#F0B860,#E8785A);border-radius:20px;padding:18px;color:#fff;margin-bottom:16px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+              <div>
+                <div style="font-size:12px;opacity:.85;margin-bottom:4px">This week</div>
+                <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:24px">5.1 <span style="font-size:14px;font-weight:600;opacity:.85">feedings/day</span></div>
               </div>
-            </sc-for>
+              <div style="background:rgba(255,255,255,.22);border-radius:99px;padding:5px 11px;font-size:11.5px;font-weight:700">On track</div>
+            </div>
+            <div style="display:flex;gap:20px">
+              <div><div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:16px">36</div><div style="font-size:11px;opacity:.85">Total feeds</div></div>
+              <div><div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:16px">3h 10m</div><div style="font-size:11px;opacity:.85">Avg interval</div></div>
+              <div><div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:16px">165ml</div><div style="font-size:11px;opacity:.85">Avg amount</div></div>
+            </div>
           </div>
-          <div style="font-size:13px;color:{{ t.textSecondary }};line-height:1.5">Averaging 5 feedings per day this week, consistent with last month.</div>
+
+          <div style="background:{{ t.card }};border:1px solid {{ t.border }};border-radius:18px;padding:16px;margin-bottom:16px">
+            <div style="font-size:13px;font-weight:700;color:{{ t.text }};margin-bottom:14px">Feedings per day</div>
+            <div style="display:flex;align-items:flex-end;gap:8px;height:130px">
+              <sc-for list="{{ feedBars }}" as="b" hint-placeholder-count="7">
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;justify-content:flex-end;height:100%">
+                  <div style="width:100%;border-radius:6px 6px 3px 3px;background:linear-gradient(180deg,#F0B860,#E8785A);height:{{ b.height }}"></div>
+                  <div style="font-size:10px;color:{{ t.textSecondary }}">{{ b.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="font-size:13px;font-weight:700;color:{{ t.text }};margin-bottom:10px">Breakdown by type</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:12px;background:{{ t.card }};border:1px solid {{ t.border }};border-radius:12px;padding:11px 14px">
+              <div style="width:8px;height:8px;border-radius:50%;background:#E8785A"></div>
+              <div style="flex:1;font-size:13px;color:{{ t.text }}">Bottle</div>
+              <div style="font-size:13px;font-weight:600;color:{{ t.textSecondary }}">62%</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;background:{{ t.card }};border:1px solid {{ t.border }};border-radius:12px;padding:11px 14px">
+              <div style="width:8px;height:8px;border-radius:50%;background:#F0B860"></div>
+              <div style="flex:1;font-size:13px;color:{{ t.text }}">Solid</div>
+              <div style="font-size:13px;font-weight:600;color:{{ t.textSecondary }}">28%</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;background:{{ t.card }};border:1px solid {{ t.border }};border-radius:12px;padding:11px 14px">
+              <div style="width:8px;height:8px;border-radius:50%;background:#7C9473"></div>
+              <div style="flex:1;font-size:13px;color:{{ t.text }}">Breast</div>
+              <div style="font-size:13px;font-weight:600;color:{{ t.textSecondary }}">10%</div>
+            </div>
+          </div>
         </div>
       </sc-if>
 
@@ -798,7 +1333,7 @@
       <sc-if value="{{ screenIs.addVaccine }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;display:flex;flex-direction:column;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">Add Vaccine</div>
           </div>
           <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Vaccine name</div>
@@ -806,7 +1341,7 @@
           <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Scheduled date</div>
           <input type="date" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:26px" />
           <div style="flex:1"></div>
-          <button onClick="{{ back }}" style="padding:16px;border:none;border-radius:14px;background:#F0B860;color:#2B2320;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Save Vaccine</button>
+          <button onClick="{{ saveAddVaccine }}" style="padding:16px;border:none;border-radius:14px;background:#F0B860;color:#2B2320;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Save Vaccine</button>
         </div>
       </sc-if>
 
@@ -814,7 +1349,7 @@
       <sc-if value="{{ screenIs.vaccineReminders }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;overflow:auto;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">Vaccine Reminders</div>
           </div>
           <div style="display:flex;flex-direction:column;border-radius:16px;overflow:hidden;border:1px solid {{ t.border }}">
@@ -829,10 +1364,26 @@
       <sc-if value="{{ screenIs.aiJournal }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;overflow:auto;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">AI Journal</div>
           </div>
           <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:18px">
+            <sc-if value="{{ journalGenerating }}" hint-placeholder-val="{{ false }}">
+              <div style="background:{{ t.card }};border:1px solid {{ t.border }};border-radius:16px;padding:14px">
+                <div style="height:10px;width:70px;border-radius:4px;background:{{ t.border }};margin-bottom:10px;animation:kn-fade 1s ease-in-out infinite alternate"></div>
+                <div style="height:10px;border-radius:4px;background:{{ t.border }};margin-bottom:6px;animation:kn-fade 1s ease-in-out .1s infinite alternate"></div>
+                <div style="height:10px;width:80%;border-radius:4px;background:{{ t.border }};animation:kn-fade 1s ease-in-out .2s infinite alternate"></div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ journalEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:40px 20px">
+                <div style="width:64px;height:64px;border-radius:50%;background:{{ t.accentSoft }};display:flex;align-items:center;justify-content:center;margin-bottom:14px">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z" stroke="#E8785A" stroke-width="1.7" stroke-linejoin="round"></path></svg>
+                </div>
+                <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;color:{{ t.text }};margin-bottom:6px">No journal entries yet</div>
+                <div style="font-size:13px;color:{{ t.textSecondary }};line-height:1.5">Generate your first AI-written memory below.</div>
+              </div>
+            </sc-if>
             <sc-for list="{{ journalEntries }}" as="e" hint-placeholder-count="3">
               <div style="background:{{ t.card }};border:1px solid {{ t.border }};border-radius:16px;padding:14px">
                 <div style="font-size:11.5px;color:{{ t.textSecondary }};margin-bottom:6px">{{ e.date }}</div>
@@ -840,7 +1391,7 @@
               </div>
             </sc-for>
           </div>
-          <button style="width:100%;padding:15px;border-radius:14px;border:none;background:linear-gradient(135deg,#F3C374,#E8785A);color:#fff;font-size:14.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">Generate New Entry</button>
+          <button onClick="{{ generateJournalEntry }}" style="width:100%;padding:15px;border-radius:14px;border:none;background:linear-gradient(135deg,#F3C374,#E8785A);color:#fff;font-size:14.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif">{{ journalButtonLabel }}</button>
         </div>
       </sc-if>
 
@@ -848,15 +1399,18 @@
       <sc-if value="{{ screenIs.milestoneGenerator }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;display:flex;flex-direction:column;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">Milestone Generator</div>
           </div>
-          <textarea placeholder="Describe what happened…" style="height:100px;padding:14px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14px;resize:none;margin-bottom:16px"></textarea>
-          <button style="padding:14px;border-radius:14px;border:none;background:linear-gradient(135deg,#F3C374,#E8785A);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif;margin-bottom:20px">Generate Milestone</button>
-          <div style="background:{{ t.accentSoft }};border-radius:16px;padding:14px">
-            <div style="font-size:11px;font-weight:700;color:#E8785A;text-transform:uppercase;margin-bottom:6px">Suggested milestone</div>
-            <div style="font-size:13.5px;color:{{ t.text }};line-height:1.6">"First steps" — a proud independent-walking milestone, ready to save to the timeline.</div>
-          </div>
+          <textarea value="{{ milestoneInput }}" onChange="{{ onMilestoneInputChange }}" placeholder="Describe what happened…" style="height:100px;padding:14px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14px;resize:none;margin-bottom:16px"></textarea>
+          <button onClick="{{ generateMilestone }}" style="padding:14px;border-radius:14px;border:none;background:linear-gradient(135deg,#F3C374,#E8785A);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif;margin-bottom:20px">{{ milestoneButtonLabel }}</button>
+          <sc-if value="{{ milestoneResult }}" hint-placeholder-val="{{ false }}">
+            <div style="background:{{ t.accentSoft }};border-radius:16px;padding:14px;margin-bottom:14px">
+              <div style="font-size:11px;font-weight:700;color:#E8785A;text-transform:uppercase;margin-bottom:6px">Suggested milestone</div>
+              <div style="font-size:13.5px;color:{{ t.text }};line-height:1.6">{{ milestoneResult }}</div>
+            </div>
+            <button onClick="{{ saveMilestoneToTimeline }}" style="padding:13px;border-radius:12px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:13px;font-weight:700;cursor:pointer">Save to Timeline</button>
+          </sc-if>
         </div>
       </sc-if>
 
@@ -864,12 +1418,12 @@
       <sc-if value="{{ screenIs.inviteMember }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;display:flex;flex-direction:column;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">Invite Member</div>
           </div>
           <div style="font-size:12.5px;font-weight:600;color:{{ t.textSecondary }};margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Email or phone</div>
           <input placeholder="jamie@family.com" style="padding:15px 16px;border-radius:14px;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:14.5px;margin-bottom:18px" />
-          <button onClick="{{ back }}" style="padding:15px;border-radius:14px;border:none;background:#E8785A;color:#fff;font-size:14.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif;margin-bottom:22px">Send Invite</button>
+          <button onClick="{{ sendInvite }}" style="padding:15px;border-radius:14px;border:none;background:#E8785A;color:#fff;font-size:14.5px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif;margin-bottom:22px">Send Invite</button>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px"><div style="flex:1;height:1px;background:{{ t.border }}"></div><div style="font-size:12px;color:{{ t.textSecondary }}">or</div><div style="flex:1;height:1px;background:{{ t.border }}"></div></div>
           <div style="display:flex;align-items:center;justify-content:space-between;background:{{ t.card }};border:1px solid {{ t.border }};border-radius:14px;padding:14px">
             <div style="font-size:13.5px;color:{{ t.text }}">kidsnote.app/invite/8f2a</div>
@@ -882,7 +1436,7 @@
       <sc-if value="{{ screenIs.roleManagement }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;display:flex;flex-direction:column;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">{{ selectedMember.name }}'s role</div>
           </div>
           <div style="display:flex;flex-direction:column;gap:10px">
@@ -900,7 +1454,7 @@
       <sc-if value="{{ screenIs.storage }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;overflow:auto;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">Storage</div>
           </div>
           <div style="background:{{ t.card }};border:1px solid {{ t.border }};border-radius:16px;padding:16px;margin-bottom:16px">
@@ -919,7 +1473,7 @@
       <sc-if value="{{ screenIs.billing }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;overflow:auto;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">Billing</div>
           </div>
           <div style="background:linear-gradient(135deg,#F0B860,#E8785A);border-radius:18px;padding:16px;color:#fff;margin-bottom:16px">
@@ -940,7 +1494,7 @@
       <sc-if value="{{ screenIs.about }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;overflow:auto;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:{{ t.text }}">About</div>
           </div>
           <div style="text-align:center;margin-bottom:22px">
@@ -960,7 +1514,7 @@
       <sc-if value="{{ screenIs.subscription }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1;overflow:auto;padding:58px 20px 24px;background:{{ t.bg }}">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
-            <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:50%;border:1px solid {{ t.border }};background:{{ t.card }};color:{{ t.text }};font-size:15px;cursor:pointer">‹</button>
+            <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;border:none;background:{{ t.card }};box-shadow:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L1.5 7.5l6 6" stroke="#E8785A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             <div style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:20px;color:{{ t.text }}">Subscription</div>
           </div>
           <div style="display:flex;gap:6px;background:{{ t.card }};border:1px solid {{ t.border }};padding:4px;border-radius:12px;margin-bottom:20px">
@@ -1028,25 +1582,155 @@ class Component extends DCLogic {
     timelineFilter: 'All', billing: 'monthly', plan: 'premium',
     noteTagSel: {}, familyName: '', notifToggles: { Milestones: true, Reminders: true, Tips: false, Comments: true, Weekly: true },
     previewIndex: null, selectedNoteIdx: 0, selectedMemberIdx: 0, memberRole: 'Parent', feedType: 'Bottle',
+    showLoginPass: false, showRegPass: false, showRegConfirm: false, chartDotIdx: null,
+    showResetPass: false, showResetConfirm: false, createAlbumMedia: [], photoView: 'grid',
+    otp: ['', '', '', '', '', ''], otpMode: 'register',
+    dragX: 0, dragY: 0, dragging: false, chromeVisible: true,
+    timeSheetOpen: false, timeSheetTarget: null, timeSheetTitle: '',
+    timeSheetHour: 20, timeSheetMinute: 10,
+    sleepStart: '20:10', sleepEnd: '06:50', feedingTime: '12:15',
+    pullY: 0, pulling: false, refreshing: false,
+    growthEditingLabel: null, growthFormHeight: '74', growthFormWeight: '9.1',
+    noteMedia: [], aiInput: '', aiThinking: false,
+    aiMessages: [{ from: 'ai', text: "Hi! Ask me anything about your child's growth, sleep, or milestones." }],
+    journalGenerating: false, journalExtra: [],
+    milestoneInput: '', milestoneResult: '', milestoneGenerating: false,
+    toast: { show: false, message: '' }, pushNotif: { show: false, title: '', body: '' },
+    confirmDialog: { show: false, title: '', message: '', confirmLabel: 'Confirm', onConfirm: null },
   };
 
-  _touchX = null;
-  openPreview = (i) => this.setState({ previewIndex: i });
+  showToast = (message) => {
+    this.setState({ toast: { show: true, message } });
+    clearTimeout(this._toastTimer);
+    this._toastTimer = setTimeout(() => this.setState({ toast: { show: false, message: '' } }), 2200);
+  };
+  triggerPushNotif = (title, body) => {
+    this.setState({ pushNotif: { show: true, title, body } });
+    clearTimeout(this._notifTimer);
+    this._notifTimer = setTimeout(() => this.setState({ pushNotif: { show: false, title: '', body: '' } }), 3200);
+  };
+  openConfirm = (title, message, onConfirm, confirmLabel) => this.setState({ confirmDialog: { show: true, title, message, onConfirm, confirmLabel: confirmLabel || 'Confirm' } });
+  closeConfirm = () => this.setState({ confirmDialog: { show: false, title: '', message: '', onConfirm: null } });
+  confirmYes = () => { const fn = this.state.confirmDialog.onConfirm; this.closeConfirm(); if (fn) fn(); };
+
+  generateMilestone = () => {
+    const desc = this.state.milestoneInput.trim();
+    if (!desc) return;
+    this.setState({ milestoneGenerating: true, milestoneResult: '' });
+    setTimeout(() => {
+      const phrased = desc.length > 60 ? desc.slice(0, 57) + '…' : desc;
+      this.setState({ milestoneGenerating: false, milestoneResult: `"${phrased}" — a proud moment worth celebrating, ready to save to the timeline.` });
+    }, 900);
+  };
+
+  generateJournalEntry = () => {
+    this.setState({ journalGenerating: true });
+    setTimeout(() => {
+      const samples = [
+        "A calm, happy day overall — lots of babbling during playtime and a solid afternoon nap. Small moments like these add up to something wonderful.",
+        "Today was full of curiosity — reaching for new toys, watching everything closely, and giggling through bath time.",
+        "A little clingier than usual today, but all smiles by dinner. Growth spurts can be tiring for everyone!",
+      ];
+      const text = samples[Math.floor(Math.random() * samples.length)];
+      const date = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      this.setState(s => ({ journalGenerating: false, journalExtra: [{ date, text }, ...s.journalExtra] }));
+    }, 1100);
+  };
+
+  aiReply(question) {
+    const q = question.toLowerCase();
+    if (q.includes('week') || q.includes('summar')) return "This week: 5 notes logged, 24 photos added, and an average of 11h 30m sleep per day — right on track.";
+    if (q.includes('month') || q.includes('compar')) return "Compared to last month, height is up 3.0cm and weight is up 0.6kg — a steady, healthy pace of growth.";
+    if (q.includes('health') || q.includes('flag')) return "No health flags this week. The DTaP dose 3 vaccine was completed on time, and sleep patterns look consistent.";
+    return "Got it — I'll take a look at the timeline and growth data for that. (This is a prototype reply — connect a real AI backend to answer live questions.)";
+  }
+  sendAiMessage = (text) => {
+    const q = (typeof text === 'string' ? text : this.state.aiInput).trim();
+    if (!q) return;
+    this.setState(s => ({ aiMessages: [...s.aiMessages, { from: 'user', text: q }], aiInput: '', aiThinking: true }));
+    setTimeout(() => {
+      this.setState(s => ({ aiMessages: [...s.aiMessages, { from: 'ai', text: this.aiReply(q) }], aiThinking: false }));
+    }, 700);
+  };
+
+  eyeIcon(open, color) {
+    return open
+      ? React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: 'none' },
+          React.createElement('path', { d: 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z', stroke: color, strokeWidth: 1.8 }),
+          React.createElement('circle', { cx: 12, cy: 12, r: 3, stroke: color, strokeWidth: 1.8 }))
+      : React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: 'none' },
+          React.createElement('path', { d: 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z', stroke: color, strokeWidth: 1.8 }),
+          React.createElement('circle', { cx: 12, cy: 12, r: 3, stroke: color, strokeWidth: 1.8 }),
+          React.createElement('line', { x1: 3, y1: 3, x2: 21, y2: 21, stroke: color, strokeWidth: 1.8 }));
+  }
+
+  _t = { x: 0, y: 0, moved: false };
+  openPreview = (i) => this.setState({ previewIndex: i, dragX: 0, dragY: 0, chromeVisible: true });
   closePreview = () => this.setState({ previewIndex: null });
-  prevPhoto = () => this.setState(s => ({ previewIndex: (s.previewIndex + 11) % 12 }));
-  nextPhoto = () => this.setState(s => ({ previewIndex: (s.previewIndex + 1) % 12 }));
-  onTouchStart = (e) => { this._touchX = e.touches[0].clientX; };
-  onTouchMove = (e) => { if (this._touchX !== null) this._touchDelta = e.touches[0].clientX - this._touchX; };
+  prevPhoto = () => this.setState(s => ({ previewIndex: (s.previewIndex + 11) % 12, dragX: 0 }));
+  nextPhoto = () => this.setState(s => ({ previewIndex: (s.previewIndex + 1) % 12, dragX: 0 }));
+  toggleChrome = () => { if (!this._t.moved) this.setState(s => ({ chromeVisible: !s.chromeVisible })); };
+  onTouchStart = (e) => {
+    const t = e.touches[0];
+    this._t = { x: t.clientX, y: t.clientY, moved: false };
+    this.setState({ dragging: true });
+  };
+  onTouchMove = (e) => {
+    const t = e.touches[0];
+    const dx = t.clientX - this._t.x, dy = t.clientY - this._t.y;
+    if (Math.abs(dx) > 6 || Math.abs(dy) > 6) this._t.moved = true;
+    if (Math.abs(dy) > Math.abs(dx)) this.setState({ dragY: Math.max(0, dy), dragX: 0 });
+    else this.setState({ dragX: dx, dragY: 0 });
+  };
   onTouchEnd = () => {
-    if (this._touchDelta > 40) this.prevPhoto();
-    else if (this._touchDelta < -40) this.nextPhoto();
-    this._touchX = null; this._touchDelta = 0;
+    const s = this.state;
+    if (s.dragY > 110) { this.closePreview(); return; }
+    if (s.dragX < -70) this.nextPhoto();
+    else if (s.dragX > 70) this.prevPhoto();
+    else this.setState({ dragX: 0, dragY: 0 });
+    this.setState({ dragging: false });
   };
 
   go = (screen) => this.setState(s => ({ history: [...s.history, s.screen], screen }));
   back = () => this.setState(s => { const h = [...s.history]; const prev = h.pop() || 'dashboard'; return { history: h, screen: prev }; });
   toggleTheme = () => this.setState(s => ({ isDark: !s.isDark }));
   jump = (screen) => this.setState({ screen, history: [] });
+  openTimeSheet = (target, title, current) => {
+    const m = /^(\d+):(\d+)$/.exec(current || '');
+    this.setState({
+      timeSheetOpen: true, timeSheetTarget: target, timeSheetTitle: title,
+      timeSheetHour: m ? parseInt(m[1], 10) : 8, timeSheetMinute: m ? parseInt(m[2], 10) : 0,
+    });
+  };
+  closeTimeSheet = () => this.setState({ timeSheetOpen: false });
+  confirmTimeSheet = () => {
+    const s = this.state;
+    const label = `${String(s.timeSheetHour).padStart(2, '0')}:${String(s.timeSheetMinute).padStart(2, '0')}`;
+    const key = { start: 'sleepStart', end: 'sleepEnd', feeding: 'feedingTime' }[s.timeSheetTarget];
+    this.setState({ [key]: label, timeSheetOpen: false });
+  };
+  onPullStart = (e) => { this._pullY0 = e.currentTarget.scrollTop <= 0 ? e.touches[0].clientY : null; };
+  onPullMove = (e) => {
+    if (this._pullY0 == null || e.currentTarget.scrollTop > 0) return;
+    const dy = e.touches[0].clientY - this._pullY0;
+    if (dy > 0) this.setState({ pullY: Math.min(dy * 0.4, 70), pulling: true });
+  };
+  onPullEnd = () => {
+    if (!this.state.pulling) return;
+    this._pullY0 = null;
+    if (this.state.pullY >= 55) {
+      this.setState({ refreshing: true, pulling: false, pullY: 56 });
+      setTimeout(() => { this.setState({ refreshing: false, pullY: 0 }); this.showToast('Refreshed'); }, 900);
+    } else this.setState({ pullY: 0, pulling: false });
+  };
+  onHourScroll = (e) => {
+    const idx = Math.max(0, Math.min(23, Math.round(e.target.scrollTop / 44)));
+    if (idx !== this.state.timeSheetHour) this.setState({ timeSheetHour: idx });
+  };
+  onMinuteScroll = (e) => {
+    const idx = Math.max(0, Math.min(59, Math.round(e.target.scrollTop / 44)));
+    if (idx !== this.state.timeSheetMinute) this.setState({ timeSheetMinute: idx });
+  };
 
   renderVals() {
     const s = this.state;
@@ -1054,7 +1738,7 @@ class Component extends DCLogic {
     const screens = ['splash','onb1','onb2','onb3','login','register','forgotPassword','createFamily','addChild','dashboard','timeline','addNote','growth','health','album','ai','settings','subscription',
       'editProfile','familyMembers','notifications','childList','childProfile','editChild','noteDetails','editNote',
       'addSleep','sleepAnalytics','addFeeding','feedingAnalytics','addVaccine','vaccineReminders','aiJournal','milestoneGenerator',
-      'inviteMember','roleManagement','storage','billing','about'];
+      'inviteMember','roleManagement','storage','billing','about','resetPassword','createAlbum','editPhoto','otpVerify','addGrowth'];
     const screenIs = {}; screens.forEach(k => screenIs[k] = s.screen === k);
 
     const childrenData = [
@@ -1068,7 +1752,7 @@ class Component extends DCLogic {
       bgColor: i === s.childIdx ? t.accentSoft : t.card,
     }));
 
-    const filterDefs = ['All', 'Milestones', 'Health', 'Notes'];
+    const filterDefs = ['All', 'Milestones', 'Health', 'Notes', 'Growth'];
     const filters = filterDefs.map(label => ({
       label, select: () => this.setState({ timelineFilter: label }),
       borderColor: s.timelineFilter === label ? ACCENT : t.border,
@@ -1105,9 +1789,17 @@ class Component extends DCLogic {
       const y = 100 - ((v - min) / (max - min || 1)) * 80 - 10;
       return { x, y };
     });
+    const photoColors = ['#F0B860','#E8785A','#7C9473','#8FA8D6','#D8A5C4','#F3C374'];
     const chartPoints = pts.map(p => `${p.x},${p.y}`).join(' ');
-    const chartDots = pts;
+    const chartDots = pts.map((p, i) => ({
+      ...p, select: () => this.setState({ chartDotIdx: i }),
+      r: s.chartDotIdx === i ? 6 : 4, ring: s.chartDotIdx === i ? 2 : 0,
+    }));
     const chartLabels = months6.map(m => ({ text: m }));
+    const chartTooltip = s.chartDotIdx === null || s.chartDotIdx === undefined
+      ? { show: false }
+      : { show: true, left: `${(pts[s.chartDotIdx].x / 320) * 100}%`, top: `${pts[s.chartDotIdx].y - 10}px`,
+          label: months6[s.chartDotIdx], value: s.metric === 'height' ? `${vals[s.chartDotIdx]} cm` : `${vals[s.chartDotIdx]} kg` };
 
     const treeDefs = [
       { label: 'Onboarding & auth', items: [
@@ -1122,7 +1814,8 @@ class Component extends DCLogic {
       { label: 'Core app (bottom nav)', items: [
         { key: 'dashboard', title: 'Home / Dashboard', notes: 'Components: child-switcher Pills, growth-summary Card, activity list Cards, quick-action Grid. API: GET /children/{id}/summary, /activities/today.' },
         { key: 'timeline', title: 'Timeline', notes: 'Components: SearchField, filter Chips, connected-line milestone Cards (tap → Note Details), FAB. API: GET /children/{id}/timeline?filter=&q=.' },
-        { key: 'growth', title: 'Growth', notes: 'Components: metric SegmentedControl, SVG LineChart w/ dots, percentile Banner, trend-row list. API: GET /children/{id}/growth?metric=.' },
+        { key: 'growth', title: 'Growth', notes: 'Components: metric SegmentedControl, SVG LineChart w/ dots, percentile Banner, tappable trend-row list (→ Edit). API: GET /children/{id}/growth?metric=.' },
+        { key: 'addGrowth', title: 'Add/Edit Growth Record', notes: 'Components: date picker, height/weight/head-circumference TextFields, Delete (edit mode only), Save. API: POST/PATCH/DELETE /growth-records.' },
         { key: 'album', title: 'Album', notes: 'Components: Year/Month SegmentedControl, month Card grid, photo Grid, full-screen swipeable MediaViewer w/ touch handlers. API: GET /children/{id}/media?year=&month=.' },
         { key: 'ai', title: 'AI', notes: 'Components: chat Bubble, suggestion Chips, gradient action Cards (Journal, Analysis, Milestone), input Field. API: POST /ai/chat, /ai/journal, /ai/milestone.' },
       ]},
@@ -1146,6 +1839,10 @@ class Component extends DCLogic {
         { key: 'editChild', title: 'Edit Child', notes: 'Components: name TextField, date picker, Save. API: PATCH /children/{id}.' },
         { key: 'familyMembers', title: 'Family Members', notes: 'Components: member row Cards (avatar, role, status Badge, tap → Role), Invite-Member dashed Button.' },
         { key: 'inviteMember', title: 'Invite Member', notes: 'Components: contact TextField, Send Button, copyable invite-link row. API: POST /families/{id}/invites.' },
+        { key: 'createAlbum', title: 'Create Album', notes: 'Components: name TextField, add-photo Grid w/ removable thumbnails. API: POST /albums.' },
+        { key: 'editPhoto', title: 'Edit Photo', notes: 'Components: photo preview, caption TextField, move-to-album Chip row. API: PATCH /media/{id}.' },
+        { key: 'resetPassword', title: 'Reset Password', notes: 'Components: new/confirm password fields w/ show-hide toggle, Reset button. API: POST /auth/reset-password.' },
+        { key: 'otpVerify', title: 'OTP Verify', notes: 'Components: 6 individual digit TextFields, Resend link, Verify button. Shared by Register success and Reset-Password flows. API: POST /auth/verify-otp.' },
         { key: 'roleManagement', title: 'Role Management', notes: 'Components: selectable role Cards (Owner/Parent/Caregiver/Viewer) w/ description + checkmark. API: PATCH /families/{id}/members/{id}/role.' },
       ]},
       { label: 'Account & settings', items: [
@@ -1173,7 +1870,28 @@ class Component extends DCLogic {
       isDark: s.isDark, themeLabel: s.isDark ? '☾ Dark' : '☀ Light', toggleTheme: this.toggleTheme,
       t, screenIs, back: this.back,
       goOnb1: () => this.go('onb1'), goOnb2: () => this.go('onb2'), goOnb3: () => this.go('onb3'), goLogin: () => this.go('login'),
-      goRegister: () => this.go('register'), goForgotPassword: () => this.go('forgotPassword'),
+      goRegister: () => this.go('register'), goForgotPassword: () => this.go('forgotPassword'), goResetPassword: () => this.go('resetPassword'),
+      submitResetPassword: () => { this.go('login'); this.showToast('Password reset successful — sign in'); },
+      goRegisterOtp: () => this.setState({ otp: ['', '', '', '', '', ''], otpMode: 'register' }, () => this.go('otpVerify')),
+      goOtp: () => this.setState({ otp: ['', '', '', '', '', ''], otpMode: 'reset' }, () => this.go('otpVerify')),
+      resendOtp: () => this.showToast('Code resent'),
+      verifyOtp: () => {
+        if (s.otpMode === 'register') { this.go('createFamily'); this.showToast('Account verified'); }
+        else { this.go('resetPassword'); }
+      },
+      otpDigits: s.otp.map((v, i) => ({
+        value: v, border: v ? ACCENT : t.border, id: `kn-otp-${i}`,
+        onChange: (e) => {
+          const val = e.target.value.replace(/\D/g, '').slice(-1);
+          this.setState(st => { const next = [...st.otp]; next[i] = val; return { otp: next }; });
+          if (val && i < 5) { const el = document.getElementById(`kn-otp-${i + 1}`); if (el) el.focus(); }
+        },
+        onKeyDown: (e) => {
+          if (e.key === 'Backspace' && !s.otp[i] && i > 0) { const el = document.getElementById(`kn-otp-${i - 1}`); if (el) el.focus(); }
+        },
+      })),
+      resetPassType: s.showResetPass ? 'text' : 'password', toggleResetPass: () => this.setState(st => ({ showResetPass: !st.showResetPass })), resetPassIcon: this.eyeIcon(s.showResetPass, t.textSecondary),
+      resetConfirmType: s.showResetConfirm ? 'text' : 'password', toggleResetConfirm: () => this.setState(st => ({ showResetConfirm: !st.showResetConfirm })), resetConfirmIcon: this.eyeIcon(s.showResetConfirm, t.textSecondary),
       goCreateFamily: () => this.go('createFamily'), goAddChild: () => this.go('addChild'), goDashboard: () => this.go('dashboard'),
       goTimeline: () => this.go('timeline'), goAddNote: () => this.go('addNote'), goGrowth: () => this.go('growth'),
       goHealth: () => this.go('health'), goAlbum: () => this.go('album'), goAi: () => this.go('ai'),
@@ -1186,6 +1904,32 @@ class Component extends DCLogic {
       goAiJournal: () => this.go('aiJournal'), goMilestoneGenerator: () => this.go('milestoneGenerator'),
       goInviteMember: () => this.go('inviteMember'), goStorage: () => this.go('storage'), goBilling: () => this.go('billing'), goAbout: () => this.go('about'),
       goEditNote: () => this.go('editNote'),
+      saveEditChild: () => this.setState(st => ({ history: st.history, screen: 'childProfile' }), () => this.showToast('Child updated')),
+      saveEditNote: () => this.go('noteDetails') || this.showToast('Note updated'),
+      saveEditProfile: () => { this.back(); this.showToast('Profile updated'); },
+      uploadAvatar: () => this.showToast('Photo picker would open here'),
+      saveAddChild: () => { this.go('dashboard'); this.showToast('Child added'); },
+      saveCreateFamily: () => { this.go('addChild'); },
+      saveAddSleep: () => { this.back(); this.showToast('Sleep record added'); },
+      saveAddFeeding: () => { this.back(); this.showToast('Feeding record added'); },
+      saveAddVaccine: () => { this.back(); this.showToast('Vaccine added'); },
+      sendInvite: () => { this.back(); this.showToast('Invite sent'); },
+      goCreateAlbum: () => this.go('createAlbum'),
+      createAlbumPhotos: s.createAlbumMedia.map((c, i) => ({ color: c, remove: () => this.setState(st => ({ createAlbumMedia: st.createAlbumMedia.filter((_, j) => j !== i) })) })),
+      saveCreateAlbum: () => { this.setState({ createAlbumMedia: [] }); this.go('album'); this.showToast('Album created'); },
+      goEditPhoto: () => this.go('editPhoto'),
+      saveEditPhoto: () => { this.back(); this.showToast('Photo updated'); },
+      openDeletePhotoConfirm: () => this.openConfirm('Delete this photo?', 'This action cannot be undone.', () => { this.closePreview(); this.showToast('Photo deleted'); }, 'Delete'),
+
+      loginPassType: s.showLoginPass ? 'text' : 'password',
+      toggleLoginPass: () => this.setState(st => ({ showLoginPass: !st.showLoginPass })),
+      loginPassIcon: this.eyeIcon(s.showLoginPass, t.textSecondary),
+      regPassType: s.showRegPass ? 'text' : 'password',
+      toggleRegPass: () => this.setState(st => ({ showRegPass: !st.showRegPass })),
+      regPassIcon: this.eyeIcon(s.showRegPass, t.textSecondary),
+      regConfirmType: s.showRegConfirm ? 'text' : 'password',
+      toggleRegConfirm: () => this.setState(st => ({ showRegConfirm: !st.showRegConfirm })),
+      regConfirmIcon: this.eyeIcon(s.showRegConfirm, t.textSecondary),
 
       setFeedTypeBottle: () => this.setState({ feedType: 'Bottle' }), setFeedTypeBreast: () => this.setState({ feedType: 'Breast' }), setFeedTypeSolid: () => this.setState({ feedType: 'Solid' }),
       feedTypeBottleBorder: s.feedType==='Bottle'?ACCENT:t.border, feedTypeBottleBg: s.feedType==='Bottle'?t.accentSoft:t.card, feedTypeBottleColor: s.feedType==='Bottle'?ACCENT:t.text,
@@ -1196,9 +1940,52 @@ class Component extends DCLogic {
       feedBars: [60,75,65,80,55,70,85].map((h,i) => ({ height: h+'%', label: ['M','T','W','T','F','S','S'][i] })),
 
       journalEntries: [
+        ...s.journalExtra,
         { date: 'Aug 13, 2026', text: `${currentChild.name} had a big day — first independent steps across the living room, cheered on by the whole family. A milestone that felt like it arrived overnight.` },
         { date: 'Aug 6, 2026', text: `A quieter week of naps and babbling. ${currentChild.name} is starting to recognize her name and turns to look every time it's called.` },
       ],
+      journalEmpty: false,
+      journalGenerating: s.journalGenerating, generateJournalEntry: this.generateJournalEntry,
+      journalButtonLabel: s.journalGenerating ? 'Generating…' : 'Generate New Entry',
+
+      milestoneInput: s.milestoneInput, onMilestoneInputChange: (e) => this.setState({ milestoneInput: e.target.value }),
+      generateMilestone: this.generateMilestone, milestoneResult: s.milestoneGenerating ? '' : s.milestoneResult,
+      milestoneButtonLabel: s.milestoneGenerating ? 'Generating…' : 'Generate Milestone',
+      saveMilestoneToTimeline: () => this.setState({ milestoneInput: '', milestoneResult: '' }, () => { this.go('timeline'); this.showToast('Milestone saved to timeline'); }),
+
+      sleepStartLabel: s.sleepStart, sleepEndLabel: s.sleepEnd, feedingTimeLabel: s.feedingTime,
+      timeSheetHourIdx: s.timeSheetHour, timeSheetMinuteIdx: s.timeSheetMinute,
+      pull: {
+        height: s.refreshing ? 56 : s.pullY, transition: s.pulling ? 'none' : 'height .25s ease',
+        label: s.refreshing ? 'Refreshing…' : (s.pullY >= 55 ? 'Release to refresh' : 'Pull to refresh'),
+        iconStyle: s.refreshing ? 'animation:kn-spin .7s linear infinite' : `transform:rotate(${Math.round((s.pullY / 70) * 360)}deg)`,
+        onStart: this.onPullStart, onMove: this.onPullMove, onEnd: this.onPullEnd,
+      },
+      openStartTimePicker: () => this.openTimeSheet('start', 'Start time', s.sleepStart),
+      openEndTimePicker: () => this.openTimeSheet('end', 'End time', s.sleepEnd),
+      openFeedingTimePicker: () => this.openTimeSheet('feeding', 'Feeding time', s.feedingTime),
+      closeTimeSheet: this.closeTimeSheet, confirmTimeSheet: this.confirmTimeSheet,
+      timeSheet: {
+        show: s.timeSheetOpen, title: s.timeSheetTitle,
+        preview: `${String(s.timeSheetHour).padStart(2, '0')}:${String(s.timeSheetMinute).padStart(2, '0')}`,
+        onHourScroll: this.onHourScroll, onMinuteScroll: this.onMinuteScroll,
+        hours: Array.from({ length: 24 }, (_, i) => i).map(h => ({
+          label: String(h).padStart(2, '0'), select: () => this.setState({ timeSheetHour: h }),
+          size: h === s.timeSheetHour ? '20px' : '15px', weight: h === s.timeSheetHour ? 700 : 500,
+          color: h === s.timeSheetHour ? ACCENT : t.textSecondary,
+        })),
+        minutes: Array.from({ length: 60 }, (_, i) => i).map(m => ({
+          label: String(m).padStart(2, '0'), select: () => this.setState({ timeSheetMinute: m }),
+          size: m === s.timeSheetMinute ? '20px' : '15px', weight: m === s.timeSheetMinute ? 700 : 500,
+          color: m === s.timeSheetMinute ? ACCENT : t.textSecondary,
+        })),
+      },
+
+      toast: s.toast, toastBottom: s.screen === 'timeline' ? '100px' : '46px',
+      pushNotif: s.pushNotif, confirmDialog: s.confirmDialog, closeConfirm: this.closeConfirm, confirmYes: this.confirmYes,
+      openLogoutConfirm: () => this.openConfirm('Log out?', 'You will need to sign in again to access your family data.', () => { this.showToast('Signed out'); this.go('login'); }, 'Log out'),
+      openDeleteNoteConfirm: () => this.openConfirm('Delete this note?', 'This action cannot be undone.', () => { this.go('timeline'); this.showToast('Note deleted'); }, 'Delete'),
+      sendTestNotification: () => this.triggerPushNotif('Kids Note', 'Reminder: MMR dose 1 vaccine is due soon for ' + currentChild.name + '.'),
 
       childListRows: childrenData.map((c, i) => ({ ...c, gender: i === 0 ? 'Girl' : 'Boy', open: () => this.setState(st => ({ childIdx: i, history: [...st.history, st.screen], screen: 'childProfile' })) })),
 
@@ -1220,7 +2007,7 @@ class Component extends DCLogic {
         { name: 'Jamie Park' }, { name: 'Alex Park' }, { name: 'Grandma Kim' },
       ][s.selectedMemberIdx],
       roles: ['Owner', 'Parent', 'Caregiver', 'Viewer'].map(name => ({
-        name, select: () => this.setState({ memberRole: name }),
+        name, select: () => { this.setState({ memberRole: name }); this.showToast(`Role updated to ${name}`); },
         desc: name === 'Owner' ? 'Full access, manage billing' : name === 'Parent' ? 'Full access to child data' : name === 'Caregiver' ? 'View and add records' : 'View only',
         bg: s.memberRole === name ? t.accentSoft : t.card, border: s.memberRole === name ? ACCENT : t.border,
         check: s.memberRole === name ? '✓' : '',
@@ -1250,18 +2037,29 @@ class Component extends DCLogic {
       navGrowthColor: s.screen==='growth'?ACCENT:t.textSecondary, navAlbumColor: s.screen==='album'?ACCENT:t.textSecondary,
       navAiColor: s.screen==='ai'?ACCENT:t.textSecondary,
 
-      filters, timelineItems, noteTags, saveNote: () => this.go('timeline'),
+      filters, timelineItems, timelineEmpty: timelineItems.length === 0, noteTags, saveNote: () => this.setState({ noteMedia: [] }, () => { this.go('timeline'); this.showToast('Note saved'); }),
+      addNotePhoto: () => this.setState(st => ({ noteMedia: [...st.noteMedia, { color: ['#F0B860','#7C9473','#8FA8D6'][st.noteMedia.length % 3], icon: '', id: Date.now() + Math.random() }] })),
+      addNoteVideo: () => this.setState(st => ({ noteMedia: [...st.noteMedia, { color: '#E8785A', icon: '▶', id: Date.now() + Math.random() }] })),
+      noteMedia: s.noteMedia.map((m, i) => ({ ...m, remove: () => this.setState(st => ({ noteMedia: st.noteMedia.filter((_, j) => j !== i) })) })),
 
-      setMetricHeight: () => this.setState({ metric: 'height' }), setMetricWeight: () => this.setState({ metric: 'weight' }),
+      setMetricHeight: () => this.setState({ metric: 'height', chartDotIdx: null }), setMetricWeight: () => this.setState({ metric: 'weight', chartDotIdx: null }),
       metricHeightBorder: s.metric==='height'?ACCENT:t.border, metricHeightBg: s.metric==='height'?t.accentSoft:t.card, metricHeightColor: s.metric==='height'?ACCENT:t.text,
       metricWeightBorder: s.metric==='weight'?ACCENT:t.border, metricWeightBg: s.metric==='weight'?t.accentSoft:t.card, metricWeightColor: s.metric==='weight'?ACCENT:t.text,
       metricValue: s.metric==='height' ? '74 cm' : '9.1 kg', metricPercentile: s.metric==='height' ? '62nd percentile' : '55th percentile',
-      chartPoints, chartDots, chartLabels,
+      chartPoints, chartDots, chartLabels, chartTooltip,
       trendRows: [
         { label: 'Height gain (30d)', change: '+3.0 cm' },
         { label: 'Weight gain (30d)', change: '+0.6 kg' },
         { label: 'Head circumference', change: '+0.4 cm' },
-      ],
+      ].map(row => ({ ...row, edit: () => this.setState({ growthEditingLabel: row.label, growthFormHeight: '74', growthFormWeight: '9.1' }, () => this.go('addGrowth')) })),
+      goAddGrowth: () => this.setState({ growthEditingLabel: null, growthFormHeight: '', growthFormWeight: '' }, () => this.go('addGrowth')),
+      growthFormTitle: s.growthEditingLabel ? 'Edit Growth Record' : 'Add Growth Record',
+      growthFormEditing: !!s.growthEditingLabel, growthFormSaveLabel: s.growthEditingLabel ? 'Save Changes' : 'Add Record',
+      growthFormHeight: s.growthFormHeight, growthFormWeight: s.growthFormWeight,
+      onGrowthHeightChange: (e) => this.setState({ growthFormHeight: e.target.value }),
+      onGrowthWeightChange: (e) => this.setState({ growthFormWeight: e.target.value }),
+      saveGrowthRecord: () => { this.go('growth'); this.showToast(s.growthEditingLabel ? 'Growth record updated' : 'Growth record added'); },
+      deleteGrowthRecord: () => this.openConfirm('Delete this record?', 'This action cannot be undone.', () => { this.go('growth'); this.showToast('Growth record deleted'); }, 'Delete'),
 
       healthTabIs: { sleep: s.healthTab==='sleep', feeding: s.healthTab==='feeding', vaccines: s.healthTab==='vaccines' },
       setHealthSleep: () => this.setState({ healthTab: 'sleep' }), setHealthFeeding: () => this.setState({ healthTab: 'feeding' }), setHealthVaccines: () => this.setState({ healthTab: 'vaccines' }),
@@ -1286,18 +2084,46 @@ class Component extends DCLogic {
         { label: 'Apr 2026', count: 15, color: '#D8A5C4', open: () => this.setState({ albumView: 'month' }) },
         { label: 'Mar 2026', count: 22, color: '#F3C374', open: () => this.setState({ albumView: 'month' }) },
       ],
-      albumPhotos: Array.from({ length: 12 }).map((_, i) => ({ color: ['#F0B860','#E8785A','#7C9473','#8FA8D6','#D8A5C4','#F3C374'][i % 6], open: () => this.openPreview(i) })),
+      albumPhotosEmpty: false,
+      photoViewIs: { grid: s.photoView === 'grid', list: s.photoView === 'list' },
+      setPhotoGridView: () => this.setState({ photoView: 'grid' }), setPhotoListView: () => this.setState({ photoView: 'list' }),
+      photoGridBg: s.photoView === 'grid' ? t.bg : 'transparent', photoGridColor: s.photoView === 'grid' ? ACCENT : t.textSecondary,
+      photoListBg: s.photoView === 'list' ? t.bg : 'transparent', photoListColor: s.photoView === 'list' ? ACCENT : t.textSecondary,
+      albumPhotos: Array.from({ length: 12 }).map((_, i) => ({
+        color: ['#F0B860','#E8785A','#7C9473','#8FA8D6','#D8A5C4','#F3C374'][i % 6], open: () => this.openPreview(i),
+        name: `Photo ${i + 1}`, date: `Aug ${(i % 28) + 1}, 2026`,
+      })),
       previewOpen: s.previewIndex !== null,
-      previewColor: s.previewIndex !== null ? ['#F0B860','#E8785A','#7C9473','#8FA8D6','#D8A5C4','#F3C374'][s.previewIndex % 6] : '#000',
       previewCounter: s.previewIndex !== null ? `${s.previewIndex + 1} / 12` : '',
-      closePreview: this.closePreview, prevPhoto: this.prevPhoto, nextPhoto: this.nextPhoto,
+      prevColor: s.previewIndex !== null ? photoColors[(s.previewIndex + 11) % 12 % 6] : '#000',
+      previewColor: s.previewIndex !== null ? photoColors[s.previewIndex % 6] : '#000',
+      nextColor: s.previewIndex !== null ? photoColors[(s.previewIndex + 1) % 12 % 6] : '#000',
+      closePreview: this.closePreview, prevPhoto: this.prevPhoto, nextPhoto: this.nextPhoto, toggleChrome: this.toggleChrome,
       onTouchStart: this.onTouchStart, onTouchMove: this.onTouchMove, onTouchEnd: this.onTouchEnd,
+      trackShift: -33.3333, dragXPx: s.dragX,
+      dragTransition: s.dragging ? 'none' : 'transform .28s cubic-bezier(.22,1,.36,1)',
+      previewTransform: `translateY(${s.dragY * 0.4}px) scale(${1 - Math.min(s.dragY / 900, 0.08)})`,
+      previewSpringTransition: s.dragging ? 'none' : 'transform .25s ease',
+      previewBackdrop: `rgba(0,0,0,${Math.max(0.55, 1 - s.dragY / 260)})`,
+      chromeOpacity: s.chromeVisible && s.dragY === 0 ? 1 : 0,
       previewDots: Array.from({ length: 12 }).map((_, i) => ({
         size: i === s.previewIndex ? '16px' : '6px',
         color: i === s.previewIndex ? '#fff' : 'rgba(255,255,255,.4)',
       })),
 
-      aiSuggestions: [{ label: 'Summarize this week' }, { label: 'Compare to last month' }, { label: 'Any health flags?' }],
+      aiSuggestions: ['Summarize this week', 'Compare to last month', 'Any health flags?'].map(label => ({ label, ask: () => this.sendAiMessage(label) })),
+      aiMessages: s.aiMessages.map(m => ({
+        text: m.text,
+        align: m.from === 'user' ? 'flex-end' : 'flex-start',
+        bg: m.from === 'user' ? '#E8785A' : t.card,
+        color: m.from === 'user' ? '#fff' : t.text,
+        border: m.from === 'user' ? 'none' : `1px solid ${t.border}`,
+        radius: m.from === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
+      })),
+      aiThinking: s.aiThinking,
+      aiInput: s.aiInput, onAiInputChange: (e) => this.setState({ aiInput: e.target.value }),
+      onAiInputKeyDown: (e) => { if (e.key === 'Enter') this.sendAiMessage(); },
+      sendAiMessage: () => this.sendAiMessage(),
 
       darkToggleBg: s.isDark ? ACCENT : t.border, darkToggleLeft: s.isDark ? '21px' : '3px',
 

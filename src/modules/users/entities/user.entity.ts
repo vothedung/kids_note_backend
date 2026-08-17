@@ -9,6 +9,8 @@ export class UserEntity {
   avatarUrl?: string | null;
   provider: AuthProvider;
   providerId?: string | null;
+  notificationSettings?: Record<string, boolean> | null;
+  emailVerifiedAt?: Date | null;
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date | null;
@@ -23,6 +25,8 @@ export class UserEntity {
     entity.avatarUrl = record.avatarUrl;
     entity.provider = record.provider;
     entity.providerId = record.providerId;
+    entity.notificationSettings = record.notificationSettings;
+    entity.emailVerifiedAt = record.emailVerifiedAt;
     entity.createdAt = record.createdAt;
     entity.updatedAt = record.updatedAt;
     entity.deletedAt = record.deletedAt;
@@ -36,6 +40,7 @@ export class UserEntity {
       fullName: this.fullName,
       avatarUrl: this.avatarUrl,
       provider: this.provider,
+      emailVerifiedAt: this.emailVerifiedAt,
       createdAt: this.createdAt,
     };
   }

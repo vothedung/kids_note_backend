@@ -44,6 +44,25 @@ export class UserPrismaRepository implements IUserRepository {
     return UserEntity.fromPrisma(record);
   }
 
+  async updatePasswordHash(id: string, passwordHash: string): Promise<void> {
+    await this.prisma.user.update({ where: { id }, data: { passwordHash } });
+  }
+
+  async markEmailVerified(id: string): Promise<void> {
+    await this.prisma.user.update({ where: { id }, data: { emailVerifiedAt: new Date() } });
+  }
+
+  async updateNotificationSettings(
+    id: string,
+    settings: Record<string, boolean>,
+  ): Promise<UserEntity> {
+    const record = await this.prisma.user.update({
+      where: { id },
+      data: { notificationSettings: settings },
+    });
+    return UserEntity.fromPrisma(record);
+  }
+
   async softDelete(id: string): Promise<void> {
     await this.prisma.user.update({ where: { id }, data: { deletedAt: new Date() } });
   }

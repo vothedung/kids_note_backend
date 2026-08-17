@@ -17,4 +17,5 @@ export interface INotificationRepository {
   create(data: CreateNotificationData): Promise<NotificationEntity>;
   markRead(id: string): Promise<NotificationEntity>;
   markAllRead(familyId: string): Promise<number>;
+  countUnread(familyId: string): Promise<number>;
 }

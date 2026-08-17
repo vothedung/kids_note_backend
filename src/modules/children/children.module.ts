@@ -24,6 +24,6 @@ import { DeleteChildUseCase } from './usecases/delete-child.usecase';
     UpdateChildUseCase,
     DeleteChildUseCase,
   ],
-  exports: [ChildAccessService, ChildAccessGuard],
+  exports: [ChildAccessService, ChildAccessGuard, GetChildUseCase],
 })
 export class ChildrenModule {}

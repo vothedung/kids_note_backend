@@ -19,11 +19,19 @@ import { CurrentUser } from '../../../common/decorators/current-user.decorator';
 import { RegisterDto } from '../dtos/register.dto';
 import { LoginDto } from '../dtos/login.dto';
 import { RefreshTokenDto } from '../dtos/refresh-token.dto';
+import { ForgotPasswordDto } from '../dtos/forgot-password.dto';
+import { ResetPasswordDto } from '../dtos/reset-password.dto';
+import { VerifyOtpDto } from '../dtos/verify-otp.dto';
+import { ResendOtpDto } from '../dtos/resend-otp.dto';
 import { RegisterUseCase } from '../usecases/register.usecase';
 import { LoginUseCase } from '../usecases/login.usecase';
 import { RefreshTokensUseCase } from '../usecases/refresh-tokens.usecase';
 import { LogoutUseCase } from '../usecases/logout.usecase';
 import { SocialLoginUseCase } from '../usecases/social-login.usecase';
+import { ForgotPasswordUseCase } from '../usecases/forgot-password.usecase';
+import { ResetPasswordUseCase } from '../usecases/reset-password.usecase';
+import { VerifyOtpUseCase } from '../usecases/verify-otp.usecase';
+import { ResendOtpUseCase } from '../usecases/resend-otp.usecase';
 import { AppleStrategy } from '../strategies/apple.strategy';
 
 const SUPPORTED_PROVIDERS = ['google', 'facebook', 'apple'] as const;
@@ -37,6 +45,10 @@ export class AuthController {
     private readonly refreshTokensUseCase: RefreshTokensUseCase,
     private readonly logoutUseCase: LogoutUseCase,
     private readonly socialLoginUseCase: SocialLoginUseCase,
+    private readonly forgotPasswordUseCase: ForgotPasswordUseCase,
+    private readonly resetPasswordUseCase: ResetPasswordUseCase,
+    private readonly verifyOtpUseCase: VerifyOtpUseCase,
+    private readonly resendOtpUseCase: ResendOtpUseCase,
     private readonly appleStrategy: AppleStrategy,
   ) {}
 
@@ -60,6 +72,41 @@ export class AuthController {
   @ApiOperation({ summary: 'Rotate refresh token, issue new access/refresh pair' })
   async refresh(@Body() dto: RefreshTokenDto) {
     return this.refreshTokensUseCase.execute(dto);
+  }
+
+  @Public()
+  @Throttle({ default: { limit: 5, ttl: 60_000 } })
+  @Post('forgot-password')
+  @ApiOperation({
+    summary: 'Request a password reset OTP email (always returns a generic message)',
+  })
+  async forgotPassword(@Body() dto: ForgotPasswordDto) {
+    return this.forgotPasswordUseCase.execute(dto);
+  }
+
+  @Public()
+  @Post('verify-otp')
+  @ApiOperation({
+    summary:
+      'Verify a 6-digit OTP for email verification (purpose=register) or password reset (purpose=reset, returns a resetToken)',
+  })
+  async verifyOtp(@Body() dto: VerifyOtpDto) {
+    return this.verifyOtpUseCase.execute(dto);
+  }
+
+  @Public()
+  @Throttle({ default: { limit: 5, ttl: 60_000 } })
+  @Post('resend-otp')
+  @ApiOperation({ summary: 'Resend an OTP code (60s cooldown; always returns a generic message)' })
+  async resendOtp(@Body() dto: ResendOtpDto) {
+    return this.resendOtpUseCase.execute(dto);
+  }
+
+  @Public()
+  @Post('reset-password')
+  @ApiOperation({ summary: 'Reset password using the resetToken from POST /auth/verify-otp' })
+  async resetPassword(@Body() dto: ResetPasswordDto) {
+    return this.resetPasswordUseCase.execute(dto);
   }
 
   @ApiBearerAuth()

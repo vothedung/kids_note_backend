@@ -35,5 +35,6 @@ import { GetTimelineUseCase } from './usecases/get-timeline.usecase';
     DeleteMilestoneUseCase,
     GetTimelineUseCase,
   ],
+  exports: [ListNotesUseCase, ListMilestonesUseCase],
 })
 export class NotesModule {}

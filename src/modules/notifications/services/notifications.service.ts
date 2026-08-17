@@ -12,4 +12,8 @@ export class NotificationsService {
   create(data: { familyId: string; title: string; body: string }) {
     return this.repo.create(data);
   }
+
+  countUnread(familyId: string): Promise<number> {
+    return this.repo.countUnread(familyId);
+  }
 }

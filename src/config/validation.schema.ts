@@ -35,4 +35,7 @@ export const validationSchema = Joi.object({
   SUPABASE_STORAGE_PUBLIC_URL: Joi.string().allow('').optional(),
 
   AI_PROVIDER_API_KEY: Joi.string().allow('').optional(),
+
+  RESEND_API_KEY: Joi.string().allow('').optional(),
+  RESEND_FROM_EMAIL: Joi.string().allow('').optional(),
 });

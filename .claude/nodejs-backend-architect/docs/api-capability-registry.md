@@ -33,7 +33,7 @@ Before proposing a new endpoint, check this registry:
 | CAP-006 | Get Order Detail | Orders | `GET /api/v1/orders/:id` | Order Detail, Order Confirmation, Admin Order View | CUSTOMER (own), ADMIN | Includes items, status history |
 | CAP-007 | Cancel Order | Orders | `POST /api/v1/orders/:id/cancel` | Order Detail (cancel button) | CUSTOMER (own, if PENDING/CONFIRMED), ADMIN | Releases stock, triggers refund if paid |
 | | | | | | | |
-| CAP-100 | Register (local) | Auth | `POST /api/v1/auth/register` | Sign Up screen | Public | bcrypt-hashes password, issues token pair |
+| CAP-100 | Register (local) | Auth | `POST /api/v1/auth/register` | Sign Up screen | Public | bcrypt-hashes password, issues token pair; also fires a register-purpose OTP (CAP-130) for email verification, best-effort (failure doesn't fail registration) |
 | CAP-101 | Login (local) | Auth | `POST /api/v1/auth/login` | Login screen | Public | Throttled 5/min/IP |
 | CAP-102 | Refresh tokens | Auth | `POST /api/v1/auth/refresh` | Silent token refresh | Public (valid refresh token) | Rotation + reuse detection, revokes all on reuse |
 | CAP-103 | Logout | Auth | `POST /api/v1/auth/logout` | Logout action | Authenticated | Revokes all refresh tokens for user |
@@ -57,6 +57,16 @@ Before proposing a new endpoint, check this registry:
 | CAP-121 | Vaccinations CRUD + reminder settings | Vaccinations | `.../vaccinations[/:id]`, `PATCH .../vaccinations/reminder-settings` | Vaccination schedule screen | Write: OWNER, PARENT; Update: +CAREGIVER; Read: any | reminder-settings not yet persisted (TODO: dedicated table) |
 | CAP-122 | Notifications list/read | Notifications | `GET/PATCH /api/v1/notifications`, `PATCH /api/v1/notifications/:id/read` | Notifications inbox | Any active member (scoped by familyId) | |
 | CAP-123 | AI chat/journal/growth-analysis/milestone | AI | `POST /api/v1/ai/chat`, `/journal`, `/growth-analysis`, `/milestone` | AI assistant screens | Authenticated | Stubbed provider (StubAiProviderService); swap AI_PROVIDER binding for a real LLM later |
+| CAP-124 | Forgot/reset password | Auth | `POST /api/v1/auth/forgot-password`, `POST /api/v1/auth/reset-password` | Forgot Password, Reset Password screens | Public | forgot-password sends an OTP (see CAP-130); reset-password consumes the resetToken CAP-130 returns. Reset token hashed (SHA-256), 30min TTL, single-use; reset revokes all refresh tokens. Email via Resend, falls back to StubEmailProviderService without RESEND_API_KEY |
+| CAP-125 | Dashboard child summary | Dashboard | `GET /api/v1/children/:id/summary` | Home/Dashboard screen | Any active member | Composes Children/Growth/Vaccinations/Notifications usecases, no new repository |
+| CAP-126 | Today's activities | Dashboard | `GET /api/v1/children/:id/activities/today` | Home/Dashboard screen | Any active member | Merges Notes/Sleep/Feeding from existing list usecases, filtered client-side to today |
+| CAP-127 | Notification preferences get/update | Users | `GET/PATCH /api/v1/users/me/notification-settings` | Settings > Notifications screen | Any authenticated (own settings only) | Stored as JSON column on User; defaults applied for unset keys |
+| CAP-128 | Billing plans/subscribe/invoices | Subscriptions | `GET /api/v1/families/:id/billing/plans`, `POST .../billing/subscribe`, `GET .../billing/invoices` | Subscription, Billing screens | plans: any active member; subscribe: OWNER; invoices: OWNER, PARENT | subscribe wraps CAP-112's update-subscription usecase; invoices stubbed empty (no payment provider) |
+| CAP-129 | Family storage usage | Storage | `GET /api/v1/families/:id/storage` | Settings > Storage screen | Any active member | Sums Media.sizeBytes by type via Prisma aggregate; quota derived from Subscription plan (FREE=1GiB, others=50GiB) |
+| CAP-130 | OTP verify (email verification / password reset) | Auth | `POST /api/v1/auth/verify-otp` | OTP Verify screen | Public | Redis-backed 6-digit code (10min TTL, single-use, 5-attempt cap); purpose=register marks emailVerifiedAt; purpose=reset issues a PasswordResetToken consumed by CAP for reset-password. Supersedes the original email-link-only forgot-password design |
+| CAP-131 | OTP resend | Auth | `POST /api/v1/auth/resend-otp` | OTP Verify screen ("Resend" link) | Public | 60s cooldown per email+purpose via Redis key; generic response regardless of account existence |
+| CAP-132 | Album create/list | Media | `POST/GET /api/v1/children/:id/albums` | Album screen ("+ New Album"), Edit Photo ("move to album") | Create: OWNER, PARENT, CAREGIVER; Read: any active member | Named collections, distinct from the year/month auto-grouping in CAP-117 |
+| CAP-133 | Media update (caption/album) | Media | `PATCH /api/v1/children/:id/media/:mediaId` | Edit Photo screen | OWNER, PARENT, CAREGIVER | Validates albumId belongs to the same child; no support yet for clearing albumId back to null |
 | _CAP-NNN_ | _[Describe capability]_ | _[Domain]_ | _[Method /path]_ | _[List consumers]_ | _[Roles]_ | _[Notes]_ |
 
 ## Adding a New Capability

@@ -45,4 +45,19 @@ export class UsersService {
     if (!user) throw new NotFoundException('User not found');
     return user;
   }
+
+  updatePasswordHash(id: string, passwordHash: string): Promise<void> {
+    return this.userRepo.updatePasswordHash(id, passwordHash);
+  }
+
+  markEmailVerified(id: string): Promise<void> {
+    return this.userRepo.markEmailVerified(id);
+  }
+
+  async updateNotificationSettings(
+    id: string,
+    settings: Record<string, boolean>,
+  ): Promise<UserEntity> {
+    return this.userRepo.updateNotificationSettings(id, settings);
+  }
 }

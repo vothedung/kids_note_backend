@@ -43,9 +43,7 @@ export class StorageService {
    * the Supabase client SDK's `uploadToSignedUrl(path, token, file)`.
    */
   async getUploadSignedUrl(key: string): Promise<{ signedUrl: string; token: string }> {
-    const { data, error } = await this.client.storage
-      .from(this.bucket)
-      .createSignedUploadUrl(key);
+    const { data, error } = await this.client.storage.from(this.bucket).createSignedUploadUrl(key);
 
     if (error || !data) {
       this.logger.error(`Failed to create signed upload URL for ${key}: ${error?.message}`);

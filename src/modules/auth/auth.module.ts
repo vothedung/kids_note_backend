@@ -7,6 +7,8 @@ import { SharedModule } from '../shared/shared.module';
 import { AuthController } from './controllers/auth.controller';
 import { REFRESH_TOKEN_REPOSITORY } from './repositories/refresh-token.repository.interface';
 import { RefreshTokenPrismaRepository } from './repositories/refresh-token.prisma-repository';
+import { PASSWORD_RESET_TOKEN_REPOSITORY } from './repositories/password-reset-token.repository.interface';
+import { PasswordResetTokenPrismaRepository } from './repositories/password-reset-token.prisma-repository';
 import { TokenService } from './services/token.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { GoogleStrategy } from './strategies/google.strategy';
@@ -17,6 +19,10 @@ import { LoginUseCase } from './usecases/login.usecase';
 import { RefreshTokensUseCase } from './usecases/refresh-tokens.usecase';
 import { LogoutUseCase } from './usecases/logout.usecase';
 import { SocialLoginUseCase } from './usecases/social-login.usecase';
+import { ForgotPasswordUseCase } from './usecases/forgot-password.usecase';
+import { ResetPasswordUseCase } from './usecases/reset-password.usecase';
+import { VerifyOtpUseCase } from './usecases/verify-otp.usecase';
+import { ResendOtpUseCase } from './usecases/resend-otp.usecase';
 
 @Module({
   imports: [
@@ -35,6 +41,7 @@ import { SocialLoginUseCase } from './usecases/social-login.usecase';
   controllers: [AuthController],
   providers: [
     { provide: REFRESH_TOKEN_REPOSITORY, useClass: RefreshTokenPrismaRepository },
+    { provide: PASSWORD_RESET_TOKEN_REPOSITORY, useClass: PasswordResetTokenPrismaRepository },
     TokenService,
     JwtStrategy,
     GoogleStrategy,
@@ -45,6 +52,10 @@ import { SocialLoginUseCase } from './usecases/social-login.usecase';
     RefreshTokensUseCase,
     LogoutUseCase,
     SocialLoginUseCase,
+    ForgotPasswordUseCase,
+    ResetPasswordUseCase,
+    VerifyOtpUseCase,
+    ResendOtpUseCase,
   ],
   exports: [TokenService],
 })

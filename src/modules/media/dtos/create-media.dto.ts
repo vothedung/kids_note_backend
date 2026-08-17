@@ -1,4 +1,13 @@
-import { IsDateString, IsEnum, IsOptional, IsString, IsUUID, MaxLength } from 'class-validator';
+import {
+  IsDateString,
+  IsEnum,
+  IsInt,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Min,
+  MaxLength,
+} from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { MediaType } from '@prisma/client';
 
@@ -31,4 +40,10 @@ export class CreateMediaDto {
   @IsOptional()
   @IsUUID()
   noteId?: string;
+
+  @ApiPropertyOptional({ description: 'File size in bytes, for storage-usage accounting' })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  sizeBytes?: number;
 }

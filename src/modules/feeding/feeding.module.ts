@@ -20,5 +20,6 @@ import { GetFeedingAnalyticsUseCase } from './usecases/get-feeding-analytics.use
     DeleteFeedingRecordUseCase,
     GetFeedingAnalyticsUseCase,
   ],
+  exports: [ListFeedingRecordsUseCase],
 })
 export class FeedingModule {}

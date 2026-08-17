@@ -18,5 +18,8 @@ export interface IUserRepository {
   findByProvider(provider: AuthProvider, providerId: string): Promise<UserEntity | null>;
   create(data: CreateUserData): Promise<UserEntity>;
   update(id: string, data: Partial<CreateUserData>): Promise<UserEntity>;
+  updatePasswordHash(id: string, passwordHash: string): Promise<void>;
+  markEmailVerified(id: string): Promise<void>;
+  updateNotificationSettings(id: string, settings: Record<string, boolean>): Promise<UserEntity>;
   softDelete(id: string): Promise<void>;
 }

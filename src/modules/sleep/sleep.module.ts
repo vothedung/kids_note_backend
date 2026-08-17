@@ -20,5 +20,6 @@ import { GetSleepAnalyticsUseCase } from './usecases/get-sleep-analytics.usecase
     DeleteSleepRecordUseCase,
     GetSleepAnalyticsUseCase,
   ],
+  exports: [ListSleepRecordsUseCase],
 })
 export class SleepModule {}

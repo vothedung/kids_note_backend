@@ -54,8 +54,8 @@ The bundled file (`Kids Note.dc.html`) is a **design reference** — an interact
 - Bottom nav: 5 items (Home, Timeline, Growth, Album, AI), icon 21px + 10px label, active = coral, inactive = text-secondary
 
 ### Components inventory
-- **Buttons**: primary (coral fill, white text, 14–16px radius, Fredoka weight 700), secondary/outline (card bg + border), dashed-outline (add actions), icon-circle (back button, 34px)
-- **Inputs**: text/date/time — 15px vertical padding, 14px radius, border token, card background
+- **Buttons**: primary (coral fill, white text, 14–16px radius, Fredoka weight 700), secondary/outline (card bg + border), dashed-outline (add actions), circular icon button (36px, no border, soft shadow, coral SVG icon — used for both Back and Edit actions for visual consistency)
+- **Inputs**: text/date/time — 15px vertical padding, 14px radius, border token, card background; password fields include a show/hide eye-icon toggle
 - **Segmented control**: 2–3 options, pill-shaped, active = coral border + accent-soft bg
 - **Toggle switch**: 44×26px track, coral when on, border-color track when off, 20px white thumb
 - **Chips**: filter chips (Timeline), tag chips (Add Note) — pill shape, border + bg + text color swap on select
@@ -77,10 +77,16 @@ Full-bleed colored gradient background (rotates coral → sage → yellow per pa
 Email + password TextFields, Forgot-password link (right-aligned), primary Sign In button, divider "or continue with", 3 social buttons (Google/Apple/Facebook) each with brand-colored icon + label, footer link to Register.
 
 ### Register
-Back button + title, name/email/password TextFields, Create Account button, footer link back to Login.
+Back button + title, name/email/password/confirm-password TextFields (password fields have show/hide eye-toggle), Create Account button (→ OTP Verify), divider "or sign up with", Google/Apple/Facebook buttons, footer link back to Login.
 
 ### Forgot Password
-Back button + title, explanation text, email TextField, Send Reset Link button.
+Back button + title, envelope icon, explanation text, email TextField, Send Reset Link button (→ OTP Verify), footer link back to Login.
+
+### OTP Verify
+Back + title, icon badge, explanation text, 6 individual auto-advancing digit TextFields (typing focuses the next box; Backspace on empty focuses the previous), Resend link, Verify button. Shared by the post-Register flow (→ Create Family) and the Forgot-Password flow (→ Reset Password screen).
+
+### Reset Password
+Back + title, new-password/confirm-password TextFields w/ show-hide toggle, Reset Password button (→ Login with success toast).
 
 ### Create Family
 Back-free (part of onboarding flow), family-name TextField, invite TextField + circular "+" add button, invited-member chip list, Continue button pinned to bottom.
@@ -95,16 +101,19 @@ Greeting + family name header, avatar button (→ Settings), horizontal child-sw
 Header + avatar, search field, horizontal filter chips (All/Milestones/Health/Notes — filters list live), vertical connected-line list of milestone cards (tap → Note Details), floating "+" FAB (→ Add Note).
 
 ### Add Note
-Back + title, text area, photo/video attach buttons (dashed outline), multi-select tag chips (Feeding/Sleep/Milestone/Health/Fun), Save button (returns to Timeline).
+Back + title, date picker, text area, tinted icon-card attach buttons (Photo = coral, Video = blue) that add real removable thumbnail previews to a grid, multi-select tag chips (Feeding/Sleep/Milestone/Health/Fun), Save button (returns to Timeline).
 
 ### Note Details
-Back + title + Edit button, tag label, title, date, full body text card.
+Back + Edit (both circular icon buttons, coral icon) + title, tag label, title, date, full body text card, attached-media thumbnail grid.
 
 ### Edit Note
-Back + title, pre-filled text area, Save button.
+Back + title, date picker, pre-filled text area, editable media grid (remove existing / add new), Save button.
 
 ### Growth
-Header + avatar, Height/Weight segmented toggle, card with SVG line chart + percentile badge + month-axis labels, insight banner (accent-soft bg), "Monthly trend" row list (height/weight/head-circumference deltas).
+Header + "+ Add Record" button + avatar, Height/Weight segmented toggle, card with a tappable SVG line chart (dots enlarge + show a value tooltip on tap) + percentile badge + month-axis labels, insight banner (accent-soft bg), tappable "Monthly trend" row list (→ Add/Edit Growth Record). Supports pull-to-refresh.
+
+### Add/Edit Growth Record
+Back + title (mode-aware), date picker, height/weight/head-circumference TextFields, Delete Record button (edit mode only, opens confirm dialog), Save button that returns to Growth with a confirmation toast.
 
 ### Health
 Back + title, Sleep/Feeding/Vaccines segmented sub-tabs. Each sub-tab: gradient stat hero card, "+Add Record"/"View Analytics" (or "+Add Vaccine"/"Reminders") action row, detail list (times/amounts or vaccine status rows with colored status dot + Done/Upcoming label).
@@ -113,25 +122,31 @@ Back + title, Sleep/Feeding/Vaccines segmented sub-tabs. Each sub-tab: gradient 
 Back + title, relevant form fields (time pickers, type segmented control, amount field, or vaccine name + date), Save button.
 
 ### Sleep Analytics / Feeding Analytics
-Back + title, 7-day bar chart card (Mon–Sun), summary sentence.
+Back + title, gradient stat hero card (avg/day + 3 supporting stats), 7-day bar chart card (Mon–Sun), breakdown-by-type/source list with percentage rows.
 
 ### Vaccine Reminders
 Back + title, 3 toggle rows (7 days before / 1 day before / on the day).
 
 ### Album
-Header + avatar, Year/Month segmented toggle. Year: 2-col grid of month cards (colored photo-block + count badge + label, tap → Month view). Month: 3-col photo grid (tap → Media Viewer).
+Header + avatar, Year/Month segmented toggle. Year: 2-col grid of fully-rounded month cards (colored photo-block + count badge + label, tap → Month view). Month: Grid/List view toggle — Grid is a 3-col photo grid, List shows photo name + date rows; both open the Media Viewer; "+ New Album" → Create Album.
+
+### Create Album
+Back + title, album-name TextField, add-photo grid (dashed "+" tile plus removable thumbnails), Create Album button.
+
+### Edit Photo
+Back + title, photo preview, caption TextField, "move to album" chip row, Save Changes button. Reached from the Media Viewer's Edit control.
 
 ### Media Viewer (photo preview)
-Full-screen black overlay, counter top-left, close (✕) top-right, centered square image, prev/next circular arrow buttons, swipe-to-navigate (touch), dot pagination at bottom.
+Full-screen overlay with a drag-following swipe carousel (neighbor photos peek at the edges), snap/advance on release, swipe-down-to-dismiss (backdrop fades with drag distance), tap-to-toggle chrome (header/dots hide for an immersive view), Edit/Delete controls (Edit → Edit Photo; Delete opens a confirm dialog), dot pagination.
 
 ### AI
-Header + avatar, AI chat bubble, suggestion chips, 3 gradient/outline action cards (Generate Journal → AI Journal, Growth Analysis → Growth, Milestone Generator → Milestone Generator), text input bar at bottom.
+Header + avatar, working chat thread (suggestion chips and free-text input both send a message, show a typing indicator, then a canned contextual reply), 3 gradient/outline action cards (Generate Journal → AI Journal, Growth Analysis → Growth, Milestone Generator → Milestone Generator), text input bar + send button at bottom.
 
 ### AI Journal
-Back + title, list of generated journal-entry cards (date + text), "Generate New Entry" gradient button.
+Back + title, list of generated journal-entry cards (date + text), "Generate New Entry" gradient button — shows a shimmering skeleton placeholder while "generating", then inserts a new entry at the top of the list.
 
 ### Milestone Generator
-Back + title, prompt text area, "Generate Milestone" gradient button, suggested-result card.
+Back + title, prompt text area (controlled), "Generate Milestone" gradient button (shows "Generating…" briefly), suggested-result card that appears after generating, "Save to Timeline" button that navigates to Timeline.
 
 ### Child List
 Back + title, list of child row cards (avatar, name, age + gender, tap → Child Profile), dashed "+ Add Child" button.
@@ -143,10 +158,10 @@ Back + title + Edit button (→ Edit Child), large avatar + name + age, 2 stat c
 Back + title, name field, date field, Save Changes button.
 
 ### Settings
-Back + title, tappable profile row (→ Edit Profile), grouped list: Family Members, Notifications, Dark Mode (switch, toggles app theme), Subscription, Billing, Storage, About — each row navigates except the switch. Log out text link at the bottom.
+Back + title, tappable profile row (→ Edit Profile), rows grouped under labeled sections (Account, Preferences, Billing, Support) each with a coral icon + chevron, Dark Mode switch (toggles app theme), full-width outlined "Log Out" button (opens confirm dialog).
 
 ### Edit Profile
-Back + title, avatar with edit badge, Name/Email/Relationship fields, Save Changes button.
+Back + title, avatar with a working camera-icon upload button, Name/Email/Relationship fields, Save Changes button.
 
 ### Family Members
 Back + title, member row cards (avatar, name, role, Owner/Active/Pending status badge, tap → Role Management), dashed "+ Invite Member" button (→ Invite Member).
@@ -176,9 +191,18 @@ Back + title, app icon + name + version, link list (Terms of Service, Privacy Po
 - All navigation is push/pop with an in-memory history stack; back buttons pop one level. Bottom-nav taps and sidebar/tree jumps reset the stack (no back-swipe expected from tab roots).
 - Dark mode is a single global toggle (Settings row + a demo button outside the phone frame in the prototype) — swaps the full color token set app-wide, including inside the device status bar.
 - Filter chips, segmented controls, and tag chips are instant client-side state changes — no loading state modeled (add real loading/skeleton states for network-backed data).
-- Photo swipe: 40px horizontal touch-delta threshold triggers prev/next; wrap-around at both ends.
-- Forms shown (Add Child, Add Note, Add Sleep/Feeding/Vaccine, Register, etc.) are visually complete but not validated in the prototype — add real validation (required fields, date ranges, email format) in implementation.
-- No empty/error states are modeled; the prototype always shows populated placeholder data. Design and implement empty states (e.g., no timeline entries yet, no photos this month) and error/retry states for each list-driven screen.
+- Photo swipe: drag-following carousel with neighbor peeking, snap/advance on release, swipe-down-to-dismiss, tap-to-toggle chrome.
+- Forms shown (Add Child, Add Note, Add Sleep/Feeding/Vaccine, Add/Edit Growth Record, Register, etc.) are visually complete and mostly wired to toast confirmations on save — but not validated in the prototype; add real validation (required fields, date ranges, email format, password match) in implementation.
+- Toasts, a push-notification banner, and a confirm dialog are implemented as shared overlay components — see below.
+- **Pull-to-refresh**: Dashboard, Timeline, Growth, and Album support dragging down from the top of the scroll area — an inline spinner area expands, flips from "Pull to refresh" to "Release to refresh" past a threshold, then shows "Refreshing…" briefly before a "Refreshed" toast. Reuse this pattern for any other list screen (Health record lists, Family Members, Notifications) since they're the same shape.
+- **Empty states**: Timeline (reachable by tapping the "Growth" filter chip, which currently has zero matching entries — icon + heading + subtext + "Add Note" CTA), Album's photo grid/list, and AI Journal all have a wired empty state (icon + heading + subtext) that activates whenever the underlying list is empty. Apply the same icon/heading/subtext pattern to any other list-driven screen when its data can legitimately be empty (Family Members, Vaccine list, Billing history, etc.).
+- No error states are modeled. Design and implement error/retry states for each list-driven and form screen.
+
+## Feedback Patterns (CRUD, notifications, confirmation)
+- **Toast**: dark pill at the bottom of the screen with a checkmark icon, auto-dismisses after ~2.2s. Fires on: note saved, child added, family created, sleep/feeding/vaccine record added, invite sent, profile/child/photo/album updated, role changed, milestone saved, password reset, account verified, signed out, photo/note deleted.
+- **Push notification**: a native-style banner (icon + title + body) slides in from the top and auto-dismisses after ~3.2s. Wired to a "Send Test Notification" button on the Notifications screen — in production this pattern should be driven by the OS push system, not in-app state.
+- **Confirm dialog**: centered modal (title, message, Cancel + destructive/primary action) used before destructive or high-consequence actions — currently wired to Log Out and Delete (note, photo). Reuse this pattern for any other destructive action added later (e.g. remove family member, delete album).
+- **Time picker (bottom sheet)**: replaces native time inputs on Add Sleep Record (start/end) and Add Feeding Record. Slides up from the bottom with a scrim backdrop; shows a large live time readout, two scrollable 24-hour/minute columns with fade-edge masks — the item that lands centered as you scroll becomes the active selection (no tap required, though tapping a row also works) — and a "Set Time" confirm button. 24-hour format, no AM/PM. Reuse this component for any other time input added later.
 
 ## State Management (from the prototype's logic)
 - `screen` (current route) + `history` (stack) — replace with real navigation (React Navigation, Flutter Navigator, etc.)

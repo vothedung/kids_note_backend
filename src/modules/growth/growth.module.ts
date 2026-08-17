@@ -20,5 +20,6 @@ import { GetGrowthTrendUseCase } from './usecases/get-growth-trend.usecase';
     DeleteGrowthRecordUseCase,
     GetGrowthTrendUseCase,
   ],
+  exports: [GetGrowthTrendUseCase],
 })
 export class GrowthModule {}

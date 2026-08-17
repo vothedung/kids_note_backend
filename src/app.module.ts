@@ -11,8 +11,10 @@ import { UsersModule } from './modules/users/users.module';
 import { FamiliesModule } from './modules/families/families.module';
 import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
 import { ChildrenModule } from './modules/children/children.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { NotesModule } from './modules/notes/notes.module';
 import { MediaModule } from './modules/media/media.module';
+import { StorageModule } from './modules/storage/storage.module';
 import { GrowthModule } from './modules/growth/growth.module';
 import { SleepModule } from './modules/sleep/sleep.module';
 import { FeedingModule } from './modules/feeding/feeding.module';
@@ -44,8 +46,10 @@ import { QueueModule } from './jobs/queue.module';
     FamiliesModule,
     SubscriptionsModule,
     ChildrenModule,
+    DashboardModule,
     NotesModule,
     MediaModule,
+    StorageModule,
     GrowthModule,
     SleepModule,
     FeedingModule,

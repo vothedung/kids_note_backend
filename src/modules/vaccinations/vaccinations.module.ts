@@ -20,5 +20,6 @@ import { UpdateReminderSettingsUseCase } from './usecases/update-reminder-settin
     DeleteVaccinationUseCase,
     UpdateReminderSettingsUseCase,
   ],
+  exports: [ListVaccinationsUseCase],
 })
 export class VaccinationsModule {}

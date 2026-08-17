@@ -22,6 +22,7 @@ export class CreateMediaUploadUseCase {
     fileName: string;
     contentType: string;
     takenAt: string;
+    sizeBytes?: number;
   }) {
     const key = this.storageService.buildObjectKey(input.childId, input.fileName);
     const { signedUrl, token } = await this.storageService.getUploadSignedUrl(key);
@@ -32,6 +33,7 @@ export class CreateMediaUploadUseCase {
       noteId: input.noteId,
       url: publicUrl,
       type: input.type,
+      sizeBytes: input.sizeBytes,
       takenAt: new Date(input.takenAt),
     });
 

@@ -65,4 +65,10 @@ export class NotificationPrismaRepository implements INotificationRepository {
     });
     return result.count;
   }
+
+  async countUnread(familyId: string): Promise<number> {
+    return this.prisma.notification.count({
+      where: { familyId, isRead: false, deletedAt: null },
+    });
+  }
 }
